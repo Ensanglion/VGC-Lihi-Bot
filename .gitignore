@@ -9,3 +9,28 @@ debug/
 
 # Ignore environment variables file
 .env
+
+# .NET build directories
+/bin/
+/obj/
+
+# User-specific files for VSCode, etc.
+.vscode/
+
+# User-specific files for .NET
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+
+# .NET Core SDKs
+.project
+
+# Temporary files
+*.swp
+*.tmp
+*.log
+*.bak
+
+# Package files
+/packages/
