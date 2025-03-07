@@ -3,6 +3,7 @@ from Classes import Mon, Field, Item, Move
 import random
 from game_logic import DamageCalculator, calculate_damage
 import time
+import math
 
 # Load the CSV into a DataFrame
 df = pd.read_csv("Pokemon_Data.csv")
@@ -104,8 +105,10 @@ iron_hands = team[3]
 # Define Field
 test_field = Field(playerLeft=miraidon, oppLeft=iron_hands)
 
-for i in range(10):
-    # Calculate Damage
-    damage = calculate_damage(miraidon, iron_hands, dazzling_gleam, test_field)
-    print(f"Miraidon's Dazzling Gleam deals {damage} damage to Iron Hands.")
-    time.sleep(1)
+# Define Damage Calculator
+
+damage = calculate_damage(miraidon, iron_hands, dazzling_gleam, test_field)
+print(f"{team[0].name}'s {team[0].move3} deals {damage} damage to {team[3].name}.")
+
+# Showdown sucks
+print(f"Turns to KO at worst case: {math.ceil(iron_hands.currentHP / damage[0])}, \nat best case: {math.ceil(iron_hands.currentHP / damage[15])}")

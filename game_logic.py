@@ -71,7 +71,7 @@ type_chart = {
         'Flying': 1, 'Psychic': 1, 'Bug': 1, 'Rock': 2, 'Ghost': 1, 'Dragon': 1, 'Dark': 1, 'Steel': 0.5, 'Fairy': 2
     },
     'Fairy': {
-        'Normal': 1, 'Fire': 0.5, 'Water': 1, 'Grass': 1, 'Electric': 1, 'Ice': 1, 'Fighting': 0.5, 'Poison': 2, 'Ground': 1,
+        'Normal': 1, 'Fire': 0.5, 'Water': 1, 'Grass': 1, 'Electric': 1, 'Ice': 1, 'Fighting': 2, 'Poison': 2, 'Ground': 1,
         'Flying': 1, 'Psychic': 1, 'Bug': 1, 'Rock': 1, 'Ghost': 1, 'Dragon': 2, 'Dark': 2, 'Steel': 0.5, 'Fairy': 1
     }
 }
@@ -101,8 +101,9 @@ class DamageCalculator:
     def stab_multiplier(move, user):
         """Returns the STAB multiplier (1, 1.5, 2, or 2.25)."""
         base_stab = 1.5 if move.type in [user.type1, user.type2] else 1
-        if user.teraType in [user.type1, user.type2]:
-            base_stab = 2 if move.type in [user.type1, user.type2] else 1.5
+        if user.IsTera:
+            if user.teraType in [user.type1, user.type2]:
+                base_stab = 2 if move.type in [user.type1, user.type2] else 1.5
         if user.ability == "Adaptability":
             base_stab *= 1.5
         return base_stab
@@ -118,7 +119,6 @@ class DamageCalculator:
             effectiveness = 1
         if move.name == "Freeze-Dry" and "Water" in [target.type1, target.type2]:
             effectiveness *= 2
-        
         return effectiveness
     
     @staticmethod
@@ -192,8 +192,6 @@ def calculate_damage(attacker, target, move, field):
     burn_multiplier = DamageCalculator.burn_multiplier(attacker, move)
     other_effects_multiplier = DamageCalculator.other_effects_multiplier(move, attacker, target, field)
     
-    random_factor = random.randint(85, 100) / 100  # Random multiplier between 0.85 and 1
-    
     # Critical hit check
     if move.name in ["Storm Throw", "Frost Breath", "Zippy Zap", "Surging Strikes", "Wicked Blow", "Flower Trick"]:
         crit_multiplier = 1.5  # Always crit
@@ -204,9 +202,13 @@ def calculate_damage(attacker, target, move, field):
     if target.ability in ["Battle Armor", "Shell Armor"]:
         crit_multiplier = 1  # No crit damage if these abilities are active
     
-    damage = (((2 * 50 / 5 + 2) * BP * A / D) / 50 + 2)
-    damage *= target_multiplier * weather_multiplier * stab_multiplier * type_multiplier
-    damage *= burn_multiplier * other_effects_multiplier * random_factor * crit_multiplier
-    
-    return int(damage)  # Return rounded damage as an integer
+    damage_rolls = []
 
+    for i in range(85, 101):
+        
+        damage = (((2 * 50 / 5 + 2) * BP * A / D) / 50 + 2)
+        damage *= target_multiplier * weather_multiplier * stab_multiplier * type_multiplier
+        damage *= burn_multiplier * other_effects_multiplier * (i / 100) * crit_multiplier
+        damage_rolls.append(int(damage))
+    
+    return damage_rolls  # Return rounded damage as an integer
