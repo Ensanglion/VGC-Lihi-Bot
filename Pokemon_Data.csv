@@ -1,0 +1,103 @@
+Name,Type1,Type2,HP,Attack,Defense,Special Attack,Special Defense,Speed,Ability
+Amoonguss,Grass,Poison,220,94,125,105,110,48,Regenerator
+Annihilape,Ghost,Fighting,194,136,101,63,133,156,Defiant
+Arcanine-Hisui,Fire,Rock,177,176,104,103,101,139,Intimidate
+Archaludon,Steel,Dragon,197,112,154,165,106,109,Stamina
+Articuno,Ice,Flying,197,81,126,154,146,107,Snow Cloak
+Basculigeon,Water,Ghost,195,180,86,90,95,130,Swift Swim
+Baxcalibur,Ice,Dragon,218,209,113,85,111,114,Thermal Exchange
+Calyrex-Ice,Psychic,Ice,202,238,171,94,151,59,As One (Ice)
+Calyrex-Shadow,Psychic,Ghost,193,81,101,198,122,222,As One (Shadow)
+Chi-Yu,Fire,Dark,152,76,106,176,142,151,Beads of Ruin
+Chien-Pao,Ice,Dark,155,172,101,99,85,205,Sword of Ruin
+Clefairy,Fairy,,177,50,86,80,110,36,Friend Guard
+Cresselia,Psychic,,227,75,153,95,165,81,Levitate
+Ditto,Normal,,155,53,110,68,69,47,Imposter
+Dondozo,Water,,226,121,176,76,104,75,Unaware
+Dragapult,Dragon,Ghost,163,189,96,108,95,194,Clear Body
+Dragonite,Dragon,Flying,191,204,116,108,121,107,Multiscale
+Electabuzz,Electric,,172,92,110,115,115,125,Vital Spirit
+Entei,Fire,,193,174,106,99,101,152,Inner Focus
+Flamigo,Fighting,Flying,157,167,94,85,85,156,Scrappy
+Flutter Mane,Fairy,Ghost,161,67,92,156,156,188,Protosynthesis
+Gallade,Psychic,Fighting,175,193,87,85,135,76,Sharpness
+Garchomp,Ground,Dragon,184,182,115,90,105,169,Rough Skin
+Gholdengo,Ghost,Steel,194,58,116,187,113,118,Good as Gold
+Glimmora,Rock,Poison,189,54,111,176,113,118,Toxic Debris
+Gothitelle,Psychic,,177,67,128,115,165,85,Shadow Tag
+Gouging Fire,Fire,Dragon,212,136,144,76,122,145,Protosynthesis
+Grimmsnarl,Dark,Fairy,202,140,101,103,123,80,Prankster
+Groudon,Ground,,199,205,172,108,114,119,Drought
+Gyarados,Water,Flying,191,194,100,72,121,112,Intimidate
+Hatterene,Psychic,Fairy,159,95,128,199,123,30,Magic Bounce
+Heatran,Fire,Steel,195,99,137,187,129,100,Flash Fire
+Hydreigon,Dragon,Dark,168,112,110,194,110,150,Levitate
+Incineroar,Fire,Dark,202,135,143,90,123,80,Intimidate
+Indeedee-F,Normal,Psychic,177,54,128,115,126,105,Psychic surge
+Iron Bundle,Ice,Water,132,76,134,176,80,206,Quark Drive
+Iron Crown,Steel,Psychic,165,78,120,174,129,165,Quark Drive
+Iron Hands,Electric,Fighting,237,198,131,63,120,73,Quark Drive
+Iron Jugulis,Dark,Flying,200,76,112,149,113,150,Quark Drive
+Iron Treads,Steel,Ground,165,180,140,82,91,158,Quark Drive
+Jumpluff,Grass,Flying,182,67,98,75,115,170,Chlorophyll
+Kingambit,Dark,Steel,206,198,140,72,114,70,Defiant
+Koraidon,Fighting,Dragon,205,180,136,94,121,180,Orichalcum Pulse
+Kyogre,Water,,207,94,117,209,161,116,Drizzle
+Landorus,Ground,Flying,181,117,111,165,101,153,Sheer Force
+Landorus-T,Ground,Flying,180,210,116,112,101,128,Intimidate
+Latias,Psychic,Dragon,186,76,111,139,151,169,Levitate
+Latios,Psychic,Dragon,156,99,100,182,130,178,Levitate
+Lilligant-Hisui,Grass,Fighting,146,157,95,63,95,172,Chlorophyll
+Lunala,Psychic,Ghost,241,106,116,198,128,123,Shadow Shield
+Magmar,Fire,,172,90,107,120,118,113,Vital Spirit
+Maushold,Normal,,150,127,90,76,95,179,Technician
+Meowscarada,Grass,Dark,152,162,90,90,90,192,Overgrow
+Metagross,Psychic,Steel,183,187,155,103,122,96,Clear Body
+Mewtwo,Psychic,,181,117,110,206,111,200,Pressure
+Mienshao,Fighting,,141,177,80,103,80,172,Inner Focus
+Miraidon,Electric,Dragon,188,94,121,187,136,191,Hadron Engine
+Moltres-Galar,Dark,Flying,196,81,120,122,173,120,Berserk
+Ninetales-Alola,Ice,Fairy,159,64,112,112,121,170,Snow Warning
+Ogerpon,Grass,,161,187,105,72,117,158,Defiant
+Ogerpon Cornerstone,Grass,Rock,156,189,104,72,116,162,Sturdy
+Ogerpon Hearthflame,Grass,Fire,179,165,111,72,117,154,Mold Breaker
+Ogerpon Wellspring,Grass,Water,182,151,106,72,118,169,Water Absorb
+Oranguru,Psychic,Normal,197,80,145,110,131,72,Inner Focus
+Palafin,Water,,176,122,92,65,82,167,Zero to Hero
+Pelipper,Water,Flying,136,49,120,161,90,117,Drizzle
+Politoed,Water,,197,85,103,111,143,105,Drizzle
+Porygon2,Normal,,191,101,128,143,126,58,Download
+Raging Bolt,Electric,Dragon,224,83,128,187,116,100,Protosynthesis
+Regidrago,Dragon,,276,94,70,167,70,132,Dragon's Maw
+Registeel,Steel,,187,102,198,85,186,71,Clear Body
+Rillaboom,Grass,,207,180,116,72,98,106,Grassy Surge
+Roaring Moon,Dark,Dragon,211,169,97,67,124,170,Protosynthesis
+Salamence,Dragon,Flying,170,139,100,162,101,167,Intimidate
+Scizor,Bug,Steel,175,196,123,67,103,86,Technician
+Scream Tail,Fairy,Psychic,219,76,138,86,139,158,Protosynthesis
+Sinistcha,Grass,Ghost,176,72,133,141,140,90,Hospitality
+Smeargle,Normal,,162,40,56,36,65,139,Moody
+Sneasler,Fighting,Poison,156,182,80,54,100,189,Unburden
+Suicune,Water,,207,85,149,111,157,116,Inner Focus
+Sylveon,Fairy,,199,76,101,160,151,84,Pixilate
+Talonflame,Fire,Flying,153,133,91,84,90,195,Gale Wings
+Tatsugiri,Water,Dragon,144,63,80,189,115,134,Commander
+Terapagos,Normal,,186,69,115,116,117,82,Tera Shell
+Terapagos-Stellar,Normal,,256,105,140,188,142,107,Teraform Zero
+Thundurus,Electric,Flying,186,108,121,146,112,132,Prankster
+Ting-Lu,Ground,Dark,241,161,153,67,129,66,Vessel of Ruin
+Tornadus,Flying,,186,108,116,160,106,132,Prankster
+Typhlosion-Hisui,Fire,Ghost,149,80,98,188,105,147,Blaze
+Tyranitar,Rock,Dark,193,204,131,103,121,95,Sand Stream
+Ursaluna,Ground,Normal,237,211,125,65,101,49,Guts
+Ursaluna Bloodmoon,Ground,Normal,189,67,140,187,85,114,Mind's Eye
+Urshifu,Fighting,Dark,176,200,120,74,80,149,Unseen Fist
+Urshifu-Rapid,Fighting,Water,176,182,120,74,80,163,Unseen Fist
+Volcarona,Fire,Bug,192,72,97,157,127,151,Flame Body
+Walking Wake,Fire,Water,189,79,115,166,104,169,Protosynthesis
+Weezing-Galar,Poison,Fairy,172,85,155,106,120,82,Neutralizing Gas
+Whimsicott,Fairy,Grass,147,78,108,109,102,184,Prankster
+Wo-Chien,Grass,Dark,192,81,126,116,174,113,Tablets of Ruin
+Zacian-Crowned,Fairy,Steel,193,198,138,90,137,193,Intrepid Sword
+Zamazenta-Crowned,Fighting,Steel,180,141,209,90,161,169,Dauntless Shield
+Zoroark-Hisui,Normal,Ghost,131,108,80,177,80,178,Illusion
