@@ -94,19 +94,25 @@ for mon_name in team_names:
     ))
 
 
+for mon in team:
+    print(mon.__dict__)
 
 # Define Moves
 dazzling_gleam = Move("Dazzling Gleam", BP=80, PP=10, type="Fairy", category="Special", contact=False, spread=True, priority=0)
 
 # Define Pokémon
 miraidon = team[0]
+iron_bundle = team[1]
+incineroar = team[2]
 iron_hands = team[3]
+iron_treads = team[4]
+ogerpon = team[5]
 
 # Define Field
 test_field = Field(playerLeft=miraidon, oppLeft=iron_hands)
 
-# Define Damage Calculator
 
+# Define Damage Calculator
 damage = calculate_damage(miraidon, iron_hands, dazzling_gleam, test_field)
 print(f"{team[0].name}'s {team[0].move3} deals {damage} damage to {team[3].name}.")
 
