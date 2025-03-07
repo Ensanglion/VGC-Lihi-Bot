@@ -22,6 +22,10 @@ class Mon:
         self.teraType = teraType
         self.IsTera = False
 
+    def take_damage(self, damage):
+        damage = damage/100
+        self.currentHP -= damage
+
 
 class Field:
     def __init__(self, playerLeft=None, playerRight=None, oppLeft=None, oppRight=None):
