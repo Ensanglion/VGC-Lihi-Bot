@@ -1,5 +1,8 @@
 import pandas as pd
-from Classes import Mon
+from Classes import Mon, Field, Item, Move
+import random
+from game_logic import DamageCalculator, calculate_damage
+import time
 
 # Load the CSV into a DataFrame
 df = pd.read_csv("Pokemon_Data.csv")
@@ -89,6 +92,20 @@ for mon_name in team_names:
                  "Fire"
     ))
 
-# Print team to verify
-for mon in team:
-    print(vars(mon))
+
+
+# Define Moves
+dazzling_gleam = Move("Dazzling Gleam", BP=80, PP=10, type="Fairy", category="Special", contact=False, spread=True, priority=0)
+
+# Define Pokémon
+miraidon = team[0]
+iron_hands = team[3]
+
+# Define Field
+test_field = Field(playerLeft=miraidon, oppLeft=iron_hands)
+
+for i in range(10):
+    # Calculate Damage
+    damage = calculate_damage(miraidon, iron_hands, dazzling_gleam, test_field)
+    print(f"Miraidon's Dazzling Gleam deals {damage} damage to Iron Hands.")
+    time.sleep(1)

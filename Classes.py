@@ -53,13 +53,14 @@ class Field:
         self.weather = None
 
 class Item:
-    def __init__(self, name, consumable):
+    def __init__(self, name, consumable, removable):
         self.name = name
         self.consumable = consumable
+        self.removable = removable
 
 
 class Move:
-    def __init__(self, name, BP, PP, type, category, contact, spread):
+    def __init__(self, name, BP, PP, type, category, contact, spread, priority):
         self.name = name
         self.BP = BP
         self.PP = PP
@@ -68,6 +69,7 @@ class Move:
         self.category = category
         self.contact = contact
         self.spread = spread
+        self.priority = priority
 
     def use_move(self):
         if self.currentPP > 0:
