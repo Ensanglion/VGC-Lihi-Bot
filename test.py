@@ -100,7 +100,7 @@ for mon in team:
 # Define Moves
 dazzling_gleam = Move("Dazzling Gleam", BP=80, PP=10, type="Fairy", category="Special", contact=False, spread=True, priority=0)
 
-# Define Pokémon
+# Define Team
 miraidon = team[0]
 iron_bundle = team[1]
 incineroar = team[2]
