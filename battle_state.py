@@ -2,84 +2,137 @@ import threading
 import time
 import pandas as pd
 import re
+import pygetwindow as gw
 from Classes import Mon, Field
 from screenshot import capture_chat
 
-# Load known Pokémon names from CSV
 def load_pokemon_names(csv_path="Pokemon_Data.csv"):
-    """Loads Pokémon names from the CSV file into a set."""
     try:
         df = pd.read_csv(csv_path)
-        return set(df["Name"].str.strip())  # Ensure names are stripped of spaces
+        return set(df["Name"].str.strip())
     except Exception as e:
         print(f"Error loading CSV: {e}")
         return set()
 
 known_pokemon = load_pokemon_names()
 
-# Updated function to parse battle text
+def load_pokemon_data(csv_path="Pokemon_Data.csv"):
+    """Load Pokémon data from a CSV file into a DataFrame."""
+    try:
+        df = pd.read_csv(csv_path)
+        return df
+    except Exception as e:
+        print(f"Error loading CSV: {e}")
+        return pd.DataFrame()  # Return an empty DataFrame on error
+
+# Load the Pokémon data into a DataFrame
+pokemon_data = load_pokemon_data()
+
 def parse_battle_text(battle_text, field, known_pokemon):
-    """
-    Parses battle text to extract Pokémon names correctly and add them to the list.
-    Ensures names with spaces (like 'Iron Hands') are fully captured.
-    If the Pokémon name isn't in the dataset and has brackets next to it, 
-    it uses the name inside the brackets.
-    """
-    # Updated regex patterns to correctly capture full names before '!' or inside brackets
-    go_pattern = re.compile(r'Go!\s*([\w\s-]+?)(?=\s*!|\s*\()', re.IGNORECASE)
-    sent_out_pattern = re.compile(r'sent out\s*([\w\s-]+?)(?=\s*!|\s*\()', re.IGNORECASE)
-    bracketed_name_pattern = re.compile(r'\(([^)]+)\)')  # Extracts anything inside parentheses
+    print("Debug - Captured Battle Text:")  # Debug output
+    print(battle_text)  # Print the captured text for debugging
 
-    def extract_valid_name(full_name, text_after):
+    # Updated regex patterns to capture full names correctly
+    go_pattern = re.compile(r'Go!\s*([\w\s-]+)(?:\s*!\s*\(([^)]+)\))?', re.IGNORECASE)
+    sent_out_pattern = re.compile(r'sent out\s*([\w\s-]+)(?:\s*!\s*\(([^)]+)\))?', re.IGNORECASE)
+    move_pattern = re.compile(r'([\w\s-]+) used ([\w\s-]+)!', re.IGNORECASE)
+    opposing_move_pattern = re.compile(r'Opposing ([\w\s-]+) used ([\w\s-]+)!', re.IGNORECASE)
+
+    def extract_valid_name(full_name, bracket_name):
         full_name = full_name.strip()
-        
-        # Check if there is a bracketed name
-        bracketed_match = bracketed_name_pattern.search(text_after)
-        bracketed_name = bracketed_match.group(1).strip() if bracketed_match else None
-
-        # Use bracketed name if full_name isn't recognized and bracket_name exists in known Pokémon
-        if full_name not in known_pokemon and bracketed_name and bracketed_name in known_pokemon:
-            return bracketed_name
+        bracket_name = bracket_name.strip() if bracket_name else None
+        if full_name not in known_pokemon and bracket_name:
+            return bracket_name
         return full_name
 
-    # Process player Pokémon
-    for match in go_pattern.finditer(battle_text):
-        full_name = match.group(1)
-        text_after = battle_text[match.end():]  # Get text after the Pokémon name
+    # Process player's Pokémon
+    for match in go_pattern.findall(battle_text):
+        full_name, bracket_name = match
+        chosen_name = extract_valid_name(full_name, bracket_name)
 
-        if full_name:
-            chosen_name = extract_valid_name(full_name, text_after)
-            if not any(mon.name == chosen_name for mon in field.playerMons):
-                field.playerMons.append(Mon(name=chosen_name, type1="Normal", type2="None", HP=100, Patk=50, Pdef=50, SpA=50, SpD=50, Speed=50))
+        # Look up the Pokémon in the DataFrame
+        pokemon_row = pokemon_data[pokemon_data["Name"].str.strip() == chosen_name]
+        if not pokemon_row.empty:
+            row = pokemon_row.iloc[0]  # Get the first matching row
+            
+            # Check if the Pokémon is already in the player's list
+            if not any(mon.name == row["Name"] for mon in field.playerMons):
+                field.playerMons.append(Mon(
+                    name=row["Name"],
+                    type1=row["Type1"],
+                    type2=row["Type2"],
+                    HP=row["HP"],
+                    Patk=row["Attack"],
+                    Pdef=row["Defense"],
+                    SpA=row["Special Attack"],
+                    SpD=row["Special Defense"],
+                    Speed=row["Speed"],
+                    moves=[]
+                ))
+                print(f"Added player Pokémon: {chosen_name}")  # Debug output
+                print("Current Player Pokémon List:", [mon.name for mon in field.playerMons])  # Debug output
+            else:
+                print(f"Player Pokémon already in list: {chosen_name}")  # Debug output
+        else:
+            print(f"Player Pokémon not found in DataFrame: {chosen_name}")  # Debug output
 
-    # Process opponent Pokémon
-    for match in sent_out_pattern.finditer(battle_text):
-        full_name = match.group(1)
-        text_after = battle_text[match.end():]  # Get text after the Pokémon name
+    # Process opponent's Pokémon
+    for match in sent_out_pattern.findall(battle_text):
+        full_name, bracket_name = match
+        chosen_name = extract_valid_name(full_name, bracket_name)
 
-        if full_name:
-            chosen_name = extract_valid_name(full_name, text_after)
-            if not any(mon.name == chosen_name for mon in field.oppMons):
-                field.oppMons.append(Mon(name=chosen_name, type1="Normal", type2="None", HP=100, Patk=50, Pdef=50, SpA=50, SpD=50, Speed=50))
+        # Look up the Pokémon in the DataFrame
+        pokemon_row = pokemon_data[pokemon_data["Name"].str.strip() == chosen_name]
+        if not pokemon_row.empty:
+            row = pokemon_row.iloc[0]  # Get the first matching row
+            
+            # Check if the Pokémon is already in the opponent's list
+            if not any(mon.name == row["Name"] for mon in field.oppMons):
+                field.oppMons.append(Mon(
+                    name=row["Name"],
+                    type1=row["Type1"],
+                    type2=row["Type2"],
+                    HP=row["HP"],
+                    Patk=row["Attack"],
+                    Pdef=row["Defense"],
+                    SpA=row["Special Attack"],
+                    SpD=row["Special Defense"],
+                    Speed=row["Speed"],
+                    moves=[]
+                ))
+                print(f"Added opponent Pokémon: {chosen_name}")  # Debug output
+                print("Current Opponent Pokémon List:", [mon.name for mon in field.oppMons])  # Debug output
+            else:
+                print(f"Opponent Pokémon already in list: {chosen_name}")  # Debug output
+        else:
+            print(f"Opponent Pokémon not found in DataFrame: {chosen_name}")  # Debug output
 
-# Background monitoring function
+    for match in move_pattern.findall(battle_text):
+        pokemon_name, move = match
+        for mon in field.playerMons:
+            if mon.name == pokemon_name and move not in mon.Moves:
+                mon.Moves.append(move)
+
+    for match in opposing_move_pattern.findall(battle_text):
+        pokemon_name, move = match
+        for mon in field.oppMons:
+            if mon.name == pokemon_name and move not in mon.moves:
+                mon.moves.append(move)
+
 def monitor_battle(field, known_pokemon):
-    while True:
+    while any("Showdown!" in w.title for w in gw.getWindowsWithTitle("Showdown!")):
         battle_text = capture_chat()
         if battle_text:
             parse_battle_text(battle_text, field, known_pokemon)
         time.sleep(2)
 
-# Initialize
-field = Field()
+try:
+    field = Field()
+    monitor_battle(field, known_pokemon)
+except Exception as e:
+    print(f"An error occurred: {e}")
+finally:
+    # Print the Pokémon lists after monitoring
+    print("Final Player's Pokémon:", [mon.name for mon in field.playerMons])
+    print("Final Opponent's Pokémon:", [mon.name for mon in field.oppMons])
 
-# Start background thread
-monitor_thread = threading.Thread(target=monitor_battle, args=(field, known_pokemon))
-monitor_thread.daemon = True
-monitor_thread.start()
-
-# Main loop for debugging
-while True:
-    print(f"Player's Pokémon: {[mon.name for mon in field.playerMons]}")
-    print(f"Opponent's Pokémon: {[mon.name for mon in field.oppMons]}")
-    time.sleep(10)
