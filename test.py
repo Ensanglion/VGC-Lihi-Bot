@@ -1,7 +1,7 @@
 import pandas as pd
 from Classes import Mon, Field, Item, Move
 import random
-from game_logic import DamageCalculator, calculate_damage
+from damage_calcs import DamageCalculator, calculate_damage
 import time
 import math
 

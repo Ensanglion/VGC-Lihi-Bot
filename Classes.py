@@ -1,6 +1,6 @@
 class Mon:
     def __init__(self, name, type1, type2, HP, Patk, Pdef, SpA, SpD, Speed, 
-                 move1=None, move2=None, move3=None, move4=None, 
+                 moves=None, 
                  heldItem=None, status="", ability="", teraType=None):
         self.name = name
         self.type1 = type1
@@ -12,10 +12,7 @@ class Mon:
         self.SpA = SpA
         self.SpD = SpD
         self.Speed = Speed
-        self.move1 = move1
-        self.move2 = move2
-        self.move3 = move3
-        self.move4 = move4
+        self.Moves = moves if moves else [] # Initialize with empty list if no moves are provided
         self.heldItem = heldItem
         self.status = status
         self.ability = ability
@@ -26,14 +23,33 @@ class Mon:
         damage = damage/100
         self.currentHP -= damage
 
+    def modify_stats(self, stat_changes):
+        """Modify the stats of the Mon based on the provided changes."""
+        for stat, change in stat_changes.items():
+            if stat == "Patk":
+                self.Patk += change
+            elif stat == "Pdef":
+                self.Pdef += change
+            elif stat == "SpA":
+                self.SpA += change
+            elif stat == "SpD":
+                self.SpD += change
+            elif stat == "Speed":
+                self.Speed += change
+    
+    def add_move(self, move_name):
+        """Adds a move to the Pokémon's move list if it has space."""
+        if len(self.Moves) < 4 and move_name not in [m.name for m in self.Moves]:
+            self.Moves.append(Move(name=move_name, BP=0, PP=0, type="Normal", category="Status", contact=False, spread=False, priority=0))
+
 
 class Field:
-    def __init__(self, playerLeft=None, playerRight=None, oppLeft=None, oppRight=None):
-        self.playerLeft = playerLeft
-        self.playerRight = playerRight
-        self.oppLeft = oppLeft
-        self.oppRight = oppRight
+    def __init__(self, playerMons=None, oppMons=None):
+        # Initialize with empty lists if no Mons are provided
+        self.playerMons = playerMons if playerMons is not None else []
+        self.oppMons = oppMons if oppMons is not None else []
         
+        # Initialize other attributes as needed
         self.TrickRoom = False
         self.playerTailwind = False
         self.oppTailwind = False

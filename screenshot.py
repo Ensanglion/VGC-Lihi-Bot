@@ -9,6 +9,9 @@ import win32gui
 import win32con
 import os
 
+count_turns = 0
+
+
 def find_tesseract_executable():
     # Common base directories to start the search
     user_home = os.path.expanduser('~')
@@ -87,6 +90,7 @@ def find_showdown_window():
     win32gui.EnumWindows(callback, windows)
     return windows[0] if windows else None
 
+
 def capture_chat():
     # Find and focus Pokemon Showdown window
     showdown_window = find_showdown_window()
@@ -162,14 +166,12 @@ def capture_chat():
     # Define patterns
     turn_pattern = re.compile(r'.*(?:turn|tum|torn|tumn)\s*\d+.*', re.IGNORECASE)
     users_pattern = re.compile(r'.*\d+\s*users?.*', re.IGNORECASE)  # Match both "user" and "users"
+    battle_start_pattern = re.compile(r'.*battle started between.*', re.IGNORECASE)  # Pattern to match battle start
     
     # Function to check if a string might be a garbled "this room is expired" message
     def is_expired_message(text):
-        # Convert to lowercase and remove special characters for comparison
         cleaned = re.sub(r'[^\w\s]', '', text.lower())
         words = cleaned.split()
-        
-        # Common OCR misreadings we've seen
         if any(w in ['thic', 'this', 'thi', 'th'] for w in words) and \
            any(w in ['ranm', 'room', 'rom', 'rm'] for w in words) and \
            any(w in ['ic', 'is', 'i'] for w in words) and \
@@ -177,81 +179,47 @@ def capture_chat():
             return True
         return False
     
-    # Find markers
-    start_idx = None
-    end_idx = None
-    
-    # First try to find two turn markers
+    # Find the battle start line and first turn line
+    battle_start_idx = None
     turn_indices = []
-    expired_idx = None
-    
     for i, line in enumerate(lines):
+        if battle_start_pattern.search(line):
+            battle_start_idx = i
         if turn_pattern.search(line):
             turn_indices.append(i)
-            if len(turn_indices) == 2:  # Found two turn markers
-                start_idx = turn_indices[0]
-                end_idx = turn_indices[1]
-                break
-        elif is_expired_message(line):  # Use the new function instead of expired_pattern
-            expired_idx = i
     
-    # If we didn't find two turn markers but found one
-    if len(turn_indices) == 1:
-        turn_idx = turn_indices[0]
-        # Check if there's a users line immediately before the turn
-        if turn_idx > 0 and users_pattern.search(lines[turn_idx - 1]):
-            # Users line is right before turn, so start from turn
-            start_idx = turn_idx
-        else:
-            # No users line or not immediately before, use turn as normal
-            start_idx = turn_idx
-        
-        # If we found an "expired" message, use it as the end marker
-        if expired_idx is not None and expired_idx > turn_idx:
-            end_idx = expired_idx
-        else:
-            end_idx = None
-    
-    # If we didn't find any turn markers but found a users line, try to use that
-    if not turn_indices and not start_idx:
-        for i, line in enumerate(lines):
-            if users_pattern.search(line):
-                start_idx = i
-                if expired_idx is not None and expired_idx > i:
-                    end_idx = expired_idx
-                break
-    
-    # Filter out unwanted words from the relevant section
-    unwanted_words = ['left', 'joined']  # Removed 'expired' since we're using the function now
-    
-    if start_idx is not None:
-        if end_idx is not None:
-            # Take text between markers
+    # If we found a battle start line and turn line(s), extract between them
+    if battle_start_idx is not None and turn_indices:
+        start_idx = battle_start_idx
+        end_idx = turn_indices[0]
+        content_lines = lines[start_idx + 1:end_idx]
+    else:
+        # Default to looking for turn markers if battle start isn't found
+        if len(turn_indices) >= 2:
+            start_idx = turn_indices[0]
+            end_idx = turn_indices[1]
             content_lines = lines[start_idx + 1:end_idx]
         else:
-            # Take text after start marker to the end
-            content_lines = lines[start_idx + 1:]
-            
-        # Filter unwanted words and expired messages
-        cleaned_lines = [
-            line 
-            for line in content_lines 
-            if not any(word in line.lower() for word in unwanted_words)
-            and not is_expired_message(line)  # Use the new function
-        ]
-        
-        cleaned_text = '\n'.join(cleaned_lines)
-    else:
-        cleaned_text = ""
+            content_lines = []
+
+    # Filter unwanted words and expired messages
+    unwanted_words = ['left', 'joined']
+    
+    cleaned_lines = [
+        line 
+        for line in content_lines 
+        if not any(word in line.lower() for word in unwanted_words)
+        and not is_expired_message(line)
+    ]
+    
+    cleaned_text = '\n'.join(cleaned_lines)
     
     # Debug information
     print("Debug - Original text:")
     print(text)
     print("\nDebug - Markers found:")
-    print(f"Start index: {start_idx}")
-    print(f"End index: {end_idx}")
+    print(f"Battle start index: {battle_start_idx}")
     print(f"Turn markers found at: {turn_indices}")
-    print(f"Expired marker found at: {expired_idx}")
     
     return cleaned_text
 
