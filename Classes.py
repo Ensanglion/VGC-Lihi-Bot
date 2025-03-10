@@ -1,3 +1,27 @@
+import pandas as pd
+import re
+
+def load_move_data(csv_path="Move_Data.csv"):
+    """Load move data from a CSV file into a dictionary."""
+    move_data = {}
+    try:
+        df = pd.read_csv(csv_path)
+        for _, row in df.iterrows():
+            move_data[row["Name"].strip()] = {
+                "BP": row["BP"],
+                "PP": row["PP"],
+                "type": row["type"],
+                "accuracy": row["accuracy"],
+                "category": row["category"],
+                "contact": row["contact"] == "TRUE",
+                "spread": row["spread"] == "TRUE",
+                "priority": row["priority"]
+            }
+    except Exception as e:
+        print(f"Error loading move data: {e}")
+    return move_data
+
+
 class Mon:
     def __init__(self, name, type1, type2, HP, Patk, Pdef, SpA, SpD, Speed, 
                  moves=None, 
@@ -37,11 +61,21 @@ class Mon:
             elif stat == "Speed":
                 self.Speed += change
     
-    def add_move(self, move_name):
+    def add_move(self, move_name, move_data):
         """Adds a move to the Pokémon's move list if it has space."""
-        if len(self.Moves) < 4 and move_name not in [m.name for m in self.Moves]:
-            self.Moves.append(Move(name=move_name, BP=0, PP=0, type="Normal", category="Status", contact=False, spread=False, priority=0))
-
+        if len(self.Moves) < 4 and move_name in move_data:
+            move_info = move_data[move_name]
+            self.Moves.append(Move(
+                name=move_name,
+                BP=move_info["BP"],
+                PP=move_info["PP"],
+                type=move_info["type"],
+                accuracy=move_info["accuracy"],
+                category=move_info["category"],
+                contact=move_info["contact"],
+                spread=move_info["spread"],
+                priority=move_info["priority"]
+            ))
 
 class Field:
     def __init__(self, playerMons=None, oppMons=None):
@@ -80,12 +114,13 @@ class Item:
 
 
 class Move:
-    def __init__(self, name, BP, PP, type, category, contact, spread, priority):
+    def __init__(self, name, BP, PP, type, accuracy, category, contact, spread, priority):
         self.name = name
         self.BP = BP
         self.PP = PP
         self.currentPP = PP
         self.type = type
+        self.accuracy = accuracy
         self.category = category
         self.contact = contact
         self.spread = spread
