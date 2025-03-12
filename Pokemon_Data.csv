@@ -59,10 +59,10 @@ Mienshao,Fighting,,141,177,80,103,80,172,Inner Focus
 Miraidon,Electric,Dragon,188,94,121,187,136,191,Hadron Engine
 Moltres-Galar,Dark,Flying,196,81,120,122,173,120,Berserk
 Ninetales-Alola,Ice,Fairy,159,64,112,112,121,170,Snow Warning
-Ogerpon,Grass,,161,187,105,72,117,158,Defiant
 Ogerpon Cornerstone,Grass,Rock,156,189,104,72,116,162,Sturdy
 Ogerpon Hearthflame,Grass,Fire,179,165,111,72,117,154,Mold Breaker
 Ogerpon Wellspring,Grass,Water,182,151,106,72,118,169,Water Absorb
+Ogerpon,Grass,,161,187,105,72,117,158,Defiant
 Oranguru,Psychic,Normal,197,80,145,110,131,72,Inner Focus
 Palafin,Water,,176,122,92,65,82,167,Zero to Hero
 Pelipper,Water,Flying,136,49,120,161,90,117,Drizzle
@@ -90,10 +90,10 @@ Ting-Lu,Ground,Dark,241,161,153,67,129,66,Vessel of Ruin
 Tornadus,Flying,,186,108,116,160,106,132,Prankster
 Typhlosion-Hisui,Fire,Ghost,149,80,98,188,105,147,Blaze
 Tyranitar,Rock,Dark,193,204,131,103,121,95,Sand Stream
-Ursaluna,Ground,Normal,237,211,125,65,101,49,Guts
 Ursaluna Bloodmoon,Ground,Normal,189,67,140,187,85,114,Mind's Eye
-Urshifu-Single,Fighting,Dark,176,200,120,74,80,149,Unseen Fist
-Urshifu-Rapid,Fighting,Water,176,182,120,74,80,163,Unseen Fist
+Ursaluna,Ground,Normal,237,211,125,65,101,49,Guts
+Urshifu-Rapid-Strike,Fighting,Water,176,182,120,74,80,163,Unseen Fist
+Urshifu,Fighting,Dark,176,200,120,74,80,149,Unseen Fist
 Volcarona,Fire,Bug,192,72,97,157,127,151,Flame Body
 Walking Wake,Fire,Water,189,79,115,166,104,169,Protosynthesis
 Weezing-Galar,Poison,Fairy,172,85,155,106,120,82,Neutralizing Gas

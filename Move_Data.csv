@@ -12,7 +12,7 @@ Grassy Glide,55,32,Grass,100,physical,FALSE,FALSE,0
 High Horsepower,95,16,Ground,95,physical,TRUE,FALSE,0
 Foul Play,95,24,Dark,100,physical,TRUE,FALSE,0
 Body Press,80,16,Fighting,100,physical,TRUE,FALSE,0
-Heavy Slam,0,16,Steel,100,physical,TRUE,FALSE,0
+Heavy Slam,80,16,Steel,100,physical,TRUE,FALSE,0
 Drain Punch,75,16,Fighting,100,physical,TRUE,FALSE,0
 Flare Blitz,120,16,Fire,100,physical,TRUE,FALSE,0
 Glacial Lance,120,8,Ice,100,physical,FALSE,TRUE,0
@@ -100,7 +100,7 @@ Moongeist Beam,100,8,Ghost,100,special,FALSE,FALSE,0
 Meteor Beam,120,16,Rock,90,special,FALSE,FALSE,0
 Giga Drain,75,16,Grass,100,special,FALSE,FALSE,0
 Tachyon Cutter,50,16,Steel,200,special,FALSE,FALSE,0
-Strange Stream,90,16,Fairy,95,special,FALSE,FALSE,0
+Strange Steam,90,16,Fairy,95,special,FALSE,FALSE,0
 Thunder,110,16,Electric,70,special,FALSE,FALSE,0
 Flash Cannon,80,16,Steel,100,special,FALSE,FALSE,0
 Grass Knot,0,32,Grass,100,special,TRUE,FALSE,0
@@ -164,3 +164,4 @@ Quiver Dance,0,32,Bug,100,status,FALSE,FALSE,0
 Aurora Veil,0,32,Ice,100,status,FALSE,FALSE,0
 Perish Song,0,8,Normal,100,status,FALSE,TRUE,0
 Dragon Dance,0,32,Dragon,100,status,FALSE,FALSE,0
+Struggle,50,1,Normal,100,physical,TRUE,FALSE,0

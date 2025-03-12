@@ -1,5 +1,4 @@
 import pandas as pd
-import re
 
 def load_move_data(csv_path="Move_Data.csv"):
     """Load move data from a CSV file into a dictionary."""
@@ -25,7 +24,7 @@ def load_move_data(csv_path="Move_Data.csv"):
 class Mon:
     def __init__(self, name, type1, type2, HP, Patk, Pdef, SpA, SpD, Speed, 
                  moves=None, 
-                 heldItem=None, status="", ability="", teraType=None):
+                 heldItem=None, status="", ability="", teraType=None, extra_effects=None):
         self.name = name
         self.type1 = type1
         self.type2 = type2
@@ -42,6 +41,16 @@ class Mon:
         self.ability = ability
         self.teraType = teraType
         self.IsTera = False
+        self.extra_effects = extra_effects if extra_effects else [] # Initialize with empty list if no effects are provided
+        
+        # Store original stats for comparison
+        self.original_stats = {
+            "Patk": Patk,
+            "Pdef": Pdef,
+            "SpA": SpA,
+            "SpD": SpD,
+            "Speed": Speed
+        }
 
     def take_damage(self, damage):
         damage = damage/100
@@ -51,15 +60,15 @@ class Mon:
         """Modify the stats of the Mon based on the provided changes."""
         for stat, change in stat_changes.items():
             if stat == "Patk":
-                self.Patk += change
+                self.Patk *= change
             elif stat == "Pdef":
-                self.Pdef += change
+                self.Pdef *= change
             elif stat == "SpA":
-                self.SpA += change
+                self.SpA *= change
             elif stat == "SpD":
-                self.SpD += change
+                self.SpD *= change
             elif stat == "Speed":
-                self.Speed += change
+                self.Speed *= change
     
     def add_move(self, move_name, move_data):
         """Adds a move to the Pokémon's move list if it has space."""
@@ -76,6 +85,14 @@ class Mon:
                 spread=move_info["spread"],
                 priority=move_info["priority"]
             ))
+
+    def stats_raised(self):
+        """Check if any stats have been raised above their original values."""
+        return (self.Patk > self.original_stats["Patk"] or
+                self.Pdef > self.original_stats["Pdef"] or
+                self.SpA > self.original_stats["SpA"] or
+                self.SpD > self.original_stats["SpD"] or
+                self.Speed > self.original_stats["Speed"])
 
 class Field:
     def __init__(self, playerMons=None, oppMons=None):

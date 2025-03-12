@@ -11,7 +11,6 @@ import os
 
 count_turns = 0
 
-
 def find_tesseract_executable():
     # Common base directories to start the search
     user_home = os.path.expanduser('~')
@@ -166,7 +165,7 @@ def capture_chat():
     # Define patterns
     turn_pattern = re.compile(r'.*(?:turn|tum|torn|tumn)\s*\d+.*', re.IGNORECASE)
     users_pattern = re.compile(r'.*\d+\s*users?.*', re.IGNORECASE)  # Match both "user" and "users"
-    battle_start_pattern = re.compile(r'.*battle started between.*', re.IGNORECASE)  # Pattern to match battle start
+    battle_start_pattern = re.compile(r'.*Battle started between*', re.IGNORECASE)  # Pattern to match battle start
     
     # Function to check if a string might be a garbled "this room is expired" message
     def is_expired_message(text):
