@@ -12,9 +12,10 @@ def load_move_data(csv_path="Move_Data.csv"):
                 "type": row["type"],
                 "accuracy": row["accuracy"],
                 "category": row["category"],
-                "contact": row["contact"] == "TRUE",
-                "spread": row["spread"] == "TRUE",
-                "priority": row["priority"]
+                "contact": row["contact"],
+                "spread": row["spread"],
+                "priority": row["priority"],
+                "effect": row["effect"]
             }
     except Exception as e:
         print(f"Error loading move data: {e}")
@@ -24,7 +25,7 @@ def load_move_data(csv_path="Move_Data.csv"):
 class Mon:
     def __init__(self, name, type1, type2, HP, Patk, Pdef, SpA, SpD, Speed, 
                  moves=None, 
-                 heldItem=None, status="", ability="", teraType=None, extra_effects=None):
+                 heldItem=None, status=None, ability="", teraType=None):
         self.name = name
         self.type1 = type1
         self.type2 = type2
@@ -37,12 +38,10 @@ class Mon:
         self.Speed = Speed
         self.Moves = moves if moves else [] # Initialize with empty list if no moves are provided
         self.heldItem = heldItem
-        self.status = status
+        self.status = status if status is not None else [] # Initialize with empty list if no status is provided
         self.ability = ability
         self.teraType = teraType
-        self.IsTera = False
-        self.extra_effects = extra_effects if extra_effects else [] # Initialize with empty list if no effects are provided
-        
+        self.IsTera = False        
         # Store original stats for comparison
         self.original_stats = {
             "Patk": Patk,
@@ -83,7 +82,8 @@ class Mon:
                 category=move_info["category"],
                 contact=move_info["contact"],
                 spread=move_info["spread"],
-                priority=move_info["priority"]
+                priority=move_info["priority"],
+                effect=move_info["effect"]
             ))
 
     def stats_raised(self):
@@ -131,7 +131,7 @@ class Item:
 
 
 class Move:
-    def __init__(self, name, BP, PP, type, accuracy, category, contact, spread, priority):
+    def __init__(self, name, BP, PP, type, accuracy, category, contact, spread, priority, effect):
         self.name = name
         self.BP = BP
         self.PP = PP
@@ -142,6 +142,7 @@ class Move:
         self.contact = contact
         self.spread = spread
         self.priority = priority
+        self.effect = effect
 
     def use_move(self):
         if self.currentPP > 0:

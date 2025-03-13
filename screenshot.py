@@ -9,8 +9,6 @@ import win32gui
 import win32con
 import os
 
-count_turns = 0
-
 def find_tesseract_executable():
     # Common base directories to start the search
     user_home = os.path.expanduser('~')
@@ -122,7 +120,6 @@ def capture_chat():
     chat_area = ImageGrab.grab(bbox=(chat_x, chat_y, chat_width + chat_x, chat_height + chat_y))
     
     # Image preprocessing for better OCR
-    # Convert to RGB if needed
     if chat_area.mode != 'RGB':
         chat_area = chat_area.convert('RGB')
     
@@ -153,53 +150,45 @@ def capture_chat():
     lines = []
     for line in text.split('\n'):
         line = line.strip()
-        # Skip empty lines, single characters, or lines with just special characters
         if (len(line) <= 1 or 
             line.isspace() or 
             all(not c.isalnum() for c in line)):
             continue
-        # Clean up any remaining special characters
         line = re.sub(r'[^\w\s%\.!\[\]()-]', '', line)
         lines.append(line)
     
-    # Define patterns
-    turn_pattern = re.compile(r'.*(?:turn|tum|torn|tumn)\s*\d+.*', re.IGNORECASE)
-    users_pattern = re.compile(r'.*\d+\s*users?.*', re.IGNORECASE)  # Match both "user" and "users"
-    battle_start_pattern = re.compile(r'.*Battle started between*', re.IGNORECASE)  # Pattern to match battle start
-    
-    # Function to check if a string might be a garbled "this room is expired" message
-    def is_expired_message(text):
-        cleaned = re.sub(r'[^\w\s]', '', text.lower())
-        words = cleaned.split()
-        if any(w in ['thic', 'this', 'thi', 'th'] for w in words) and \
-           any(w in ['ranm', 'room', 'rom', 'rm'] for w in words) and \
-           any(w in ['ic', 'is', 'i'] for w in words) and \
-           any(w in ['avnirod', 'expired', 'expird', 'expir'] for w in words):
-            return True
-        return False
-    
-    # Find the battle start line and first turn line
+    # Initialize turn counter
+    turn_counter = 0
+    battle_started = False
+
+    # Find the battle start line and turn line(s)
     battle_start_idx = None
     turn_indices = []
     for i, line in enumerate(lines):
-        if battle_start_pattern.search(line):
+        if "Battle started between" in line:
             battle_start_idx = i
-        if turn_pattern.search(line):
+            battle_started = True
+        if battle_started and re.match(r'Turn \d+', line):  # Match lines like "Turn 1", "Turn 2", etc.
             turn_indices.append(i)
     
-    # If we found a battle start line and turn line(s), extract between them
-    if battle_start_idx is not None and turn_indices:
-        start_idx = battle_start_idx
-        end_idx = turn_indices[0]
-        content_lines = lines[start_idx + 1:end_idx]
-    else:
-        # Default to looking for turn markers if battle start isn't found
-        if len(turn_indices) >= 2:
-            start_idx = turn_indices[0]
-            end_idx = turn_indices[1]
-            content_lines = lines[start_idx + 1:end_idx]
+    # If we found a battle start line, extract between it and the next turn line
+    if battle_start_idx is not None:
+        if turn_indices:
+            start_idx = battle_start_idx
+            end_idx = turn_indices[0]  # Get the index of the first "Turn X"
+            content_lines = lines[start_idx + 1:end_idx]  # Extract lines between
+            turn_counter += 1  # Increment turn counter after capturing
+            
+            # Check for the next turn if needed
+            if len(turn_indices) > 1:
+                next_turn_start_idx = turn_indices[1]
+                next_turn_content = lines[end_idx + 1:next_turn_start_idx]  # Capture text until the next turn
+                content_lines.extend(next_turn_content)  # Append the next turn content
         else:
-            content_lines = []
+            # If no turn indices found, capture everything after battle start
+            content_lines = lines[battle_start_idx + 1:]
+    else:
+        content_lines = []
 
     # Filter unwanted words and expired messages
     unwanted_words = ['left', 'joined']
@@ -208,7 +197,6 @@ def capture_chat():
         line 
         for line in content_lines 
         if not any(word in line.lower() for word in unwanted_words)
-        and not is_expired_message(line)
     ]
     
     cleaned_text = '\n'.join(cleaned_lines)

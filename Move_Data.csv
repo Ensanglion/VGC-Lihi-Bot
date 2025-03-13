@@ -1,167 +1,167 @@
-Name,BP,PP,type,accuracy,category,contact,spread,priority
-Fake Out,40,16,Normal,100,physical,TRUE,FALSE,3
-Close Combat,120,8,Fighting,100,physical,TRUE,FALSE,0
-Surging Strikes,25,8,Water,100,physical,TRUE,FALSE,0
-Ivy Cudgel,100,16,Grass,100,physical,FALSE,FALSE,0
-U-Turn,70,32,Bug,100,physical,TRUE,FALSE,0
-Wood Hammer,120,24,Grass,100,physical,TRUE,FALSE,0
-Knock Off,65,32,Dark,100,physical,TRUE,FALSE,0
-Aqua Jet,40,32,Water,100,physical,TRUE,FALSE,1
-Sucker Punch,70,8,Dark,100,physical,TRUE,FALSE,1
-Grassy Glide,55,32,Grass,100,physical,FALSE,FALSE,0
-High Horsepower,95,16,Ground,95,physical,TRUE,FALSE,0
-Foul Play,95,24,Dark,100,physical,TRUE,FALSE,0
-Body Press,80,16,Fighting,100,physical,TRUE,FALSE,0
-Heavy Slam,80,16,Steel,100,physical,TRUE,FALSE,0
-Drain Punch,75,16,Fighting,100,physical,TRUE,FALSE,0
-Flare Blitz,120,16,Fire,100,physical,TRUE,FALSE,0
-Glacial Lance,120,8,Ice,100,physical,FALSE,TRUE,0
-Ice Spinner,80,24,Ice,100,physical,TRUE,FALSE,0
-Power Whip,120,16,Grass,85,physical,TRUE,FALSE,0
-Iron Head,80,24,Steel,100,physical,TRUE,FALSE,0
-Horn Leech,75,16,Grass,100,physical,TRUE,FALSE,0
-Throat Chop,80,24,Dark,100,physical,TRUE,FALSE,0
-Low Kick,0,32,Fighting,100,physical,TRUE,FALSE,0
-Wicked Blow,75,8,Dark,100,physical,TRUE,FALSE,0
-Wild Charge,90,24,Electric,100,physical,TRUE,FALSE,0
-Acrobatics,55,24,Flying,100,physical,TRUE,FALSE,0
-Sacred Sword,90,24,Fighting,100,physical,TRUE,FALSE,0
-Icicle Crash,85,16,Ice,90,physical,FALSE,FALSE,0
-Extreme Speed,80,8,Normal,100,physical,TRUE,FALSE,2
-Wave Crash,120,16,Water,100,physical,TRUE,FALSE,0
-Stomping Tantrum,75,16,Ground,100,physical,TRUE,FALSE,0
-Collision Course,100,8,Fighting,100,physical,TRUE,FALSE,0
-Earthquake,100,16,Ground,100,physical,FALSE,TRUE,0
-Order Up,80,16,Dragon,100,physical,FALSE,FALSE,0
-Spirit Break,75,24,Fairy,100,physical,TRUE,FALSE,0
-Sacred Fire,100,8,Fire,95,physical,FALSE,FALSE,0
-Heat Crash,0,16,Fire,100,physical,TRUE,FALSE,0
-Crunch,80,24,Dark,100,physical,TRUE,FALSE,0
-Precipice Blades,120,16,Ground,85,physical,FALSE,TRUE,0
-Flame Charge,50,32,Fire,100,physical,TRUE,FALSE,0
-Play Rough,90,16,Fairy,90,physical,TRUE,FALSE,0
-Outrage,120,16,Dragon,100,physical,TRUE,FALSE,0
-Aerial Ace,60,32,Flying,200,physical,TRUE,FALSE,0
-Headlong Rush,120,8,Ground,100,physical,TRUE,FALSE,0
-Fissure,9999,5,Ground,30,physical,FALSE,FALSE,0
-Breaking Swipe,60,24,Dragon,100,physical,TRUE,TRUE,0
-Facade,70,32,Normal,100,physical,TRUE,FALSE,0
-Sand Tomb,35,24,Ground,85,physical,FALSE,FALSE,0
-Rock Slide,75,16,Rock,90,physical,FALSE,TRUE,0
-Scale Shot,25,32,Dragon,90,physical,FALSE,FALSE,0
-Shadow Claw,70,24,Ghost,100,physical,TRUE,FALSE,0
-Behemoth Bash,100,8,Steel,100,physical,TRUE,FALSE,0
-Steel Roller,130,8,Steel,100,physical,TRUE,FALSE,0
-Last Respects,50,16,Ghost,100,physical,FALSE,FALSE,0
-Kowtow Cleave,85,16,Dark,200,physical,TRUE,FALSE,0
-Draco Meteor,130,8,Dragon,90,special,FALSE,FALSE,0
-Moonblast,95,24,Fairy,100,special,FALSE,FALSE,0
-Sludge Bomb,90,16,Poison,100,special,FALSE,FALSE,0
-Earth Power,90,16,Ground,100,special,FALSE,FALSE,0
-Dazzling Gleam,80,16,Fairy,100,special,FALSE,TRUE,0
-Thunderclap,70,8,Electric,100,special,FALSE,FALSE,1
-Icy Wind,55,24,Ice,100,special,FALSE,TRUE,0
-Volt Switch,70,32,Electric,100,special,FALSE,FALSE,0
-Thunderbolt,90,24,Electric,100,special,FALSE,FALSE,0
-Snarl,55,24,Dark,100,special,FALSE,TRUE,0
-Psychic,90,16,Psychic,100,special,FALSE,FALSE,0
-Astral Barrage,120,8,Ghost,100,special,FALSE,TRUE,0
-Heat Wave,95,16,Fire,90,special,FALSE,TRUE,0
-Sandsear Storm,100,16,Ground,80,special,FALSE,TRUE,0
-Electro drift,100,8,Electric,100,special,TRUE,FALSE,0
-Pollen Puff,90,24,Bug,100,special,FALSE,FALSE,0
-Overheat,130,8,Fire,90,special,FALSE,FALSE,0
-Dark Pulse,80,24,Dark,100,special,FALSE,FALSE,0
-Shadow Ball,80,24,Ghost,100,special,FALSE,FALSE,0
-Bleakwind Storm,100,16,Flying,80,special,FALSE,TRUE,0
-Electroweb,55,24,Electric,95,special,FALSE,TRUE,0
-Dragon Pulse,85,16,Dragon,100,special,FALSE,FALSE,0
-Weather Ball,50,16,Normal,100,special,FALSE,FALSE,0
-Draining Kiss,50,16,Fairy,100,special,FALSE,FALSE,0
-Psychic Noise,75,16,Psychic,100,special,FALSE,FALSE,0
-Ice Bean,90,16,Ice,100,special,FALSE,FALSE,0
-Tera Starstorm,120,8,Normal,100,special,FALSE,FALSE,0
-Hurricane,110,16,Flying,70,special,FALSE,FALSE,0
-Origin Pulse,110,16,Water,85,special,FALSE,TRUE,0
-Tera Blast,80,16,Normal,100,special,FALSE,FALSE,0
-Expanding Force,80,16,Psychic,100,special,FALSE,FALSE,0
-Hyper Voice,90,16,Normal,100,special,FALSE,TRUE,0
-Clear Smog,50,24,Poison,200,special,FALSE,FALSE,0
-Muddy Water,90,16,Water,85,special,FALSE,TRUE,0
-Water Spout,150,8,Water,100,special,FALSE,TRUE,0
-Psyshock,80,16,Psychic,100,special,FALSE,FALSE,0
-Blood Moon,140,8,Normal,100,special,FALSE,FALSE,0
-Flamethrower,90,24,Fire,100,special,FALSE,FALSE,0
-Ruination,0,16,Dark,90,special,FALSE,FALSE,0
-Alluring Voice,80,16,Fairy,100,special ,FALSE,FALSE,0
-Make It Rain,120,8,Steel,100,special,FALSE,TRUE,0
-Eruption,150,8,Fire,100,special,FALSE,TRUE,0
-Moongeist Beam,100,8,Ghost,100,special,FALSE,FALSE,0
-Meteor Beam,120,16,Rock,90,special,FALSE,FALSE,0
-Giga Drain,75,16,Grass,100,special,FALSE,FALSE,0
-Tachyon Cutter,50,16,Steel,200,special,FALSE,FALSE,0
-Strange Steam,90,16,Fairy,95,special,FALSE,FALSE,0
-Thunder,110,16,Electric,70,special,FALSE,FALSE,0
-Flash Cannon,80,16,Steel,100,special,FALSE,FALSE,0
-Grass Knot,0,32,Grass,100,special,TRUE,FALSE,0
-Freeze-Dry,70,32,Ice,100,special,FALSE,FALSE,0
-Magma Storm,100,8,Fire,75,special,FALSE,FALSE,0
-Electro Shot,130,16,Electric,100,special,FALSE,FALSE,0
-Hydro Steam,80,24,Water,100,special,FALSE,FALSE,0
-Blizzard,110,8,Ice,70,special,FALSE,TRUE,0
-Hyper Beam,150,8,Normal,90,special,FALSE,FALSE,0
-Air Slash,75,24,Flying,95,special,FALSE,FALSE,0
-Struggle Bug,50,32,Bug,90,special,FALSE,TRUE,0
-Hydro Pump,110,8,Water,80,special,FALSE,FALSE,0
-Power Gem,80,32,Rock,100,special,FALSE,FALSE,0
-Final Gambit,1,8,Fighting,100,special,FALSE,FALSE,0
-Rising Voltage,70,32,Electric,100,special,FALSE,FALSE,0
-Fiery Dance,80,16,Fire,100,special,FALSE,FALSE,0
-Luster Purge,95,8,Psychic,100,special,FALSE,FALSE,0
-Discharge,80,24,Electric,100,special,FALSE,TRUE,0
-Parabolic Charge,65,32,Electric,100,special,FALSE,TRUE,0
-Wildbolt Storm,100,16,Electric,100,special,FALSE,TRUE,0
-Bug Buzz,90,16,Bug,100,special,FALSE,FALSE,0
-Surf,90,24,Water,100,special,FALSE,TRUE,0
-Armor Cannon,120,8,Fire,100,special,FALSE,FALSE,0
-Protect,0,16,Normal,100,status,FALSE,FALSE,4
-Follow Me,0,32,Normal,100,status,FALSE,FALSE,2
-Trick Room,0,8,Psychic,100,status,FALSE,FALSE,-7
-Tailwind,0,24,Flying,100,status,FALSE,FALSE,0
-Taunt,0,32,Dark,100,status,FALSE,FALSE,0
-Spiky Shield,0,16,Grass,100,status,FALSE,FALSE,4
-Helping Hand,0,32,Normal,100,status,FALSE,FALSE,5
-Detect,0,8,Fighting,100,status,FALSE,FALSE,4
-Rage Powder,0,32,Bug,100,status,FALSE,FALSE,2
-Spore,0,24,Grass,100,status,FALSE,FALSE,0
-Parting Shot,0,32,Dark,100,status,FALSE,FALSE,0
-Wide Guard,0,16,Rock,100,status,FALSE,FALSE,3
-Will-O-Wisp,0,24,Fire,85,status,FALSE,FALSE,0
-Encore,0,8,Normal,100,status,FALSE,FALSE,0
-Light Screen,0,48,Psychic,100,status,FALSE,FALSE,0
-Calm Mind,0,32,Psychic,100,status,FALSE,FALSE,0
-Thunder Wave,0,32,Electric,90,status,FALSE,FALSE,0
-Nasty Plot,0,32,Dark,100,status,FALSE,FALSE,0
-Rain Dance,0,8,Water,100,status,FALSE,FALSE,0
-Coaching,0,16,Fighting,100,status,FALSE,FALSE,0
-Substitute,0,16,Normal,100,status,FALSE,FALSE,0
-Reflect,0,32,Psychic,100,status,FALSE,FALSE,0
-Sunny Day,0,8,Fire,100,status,FALSE,FALSE,0
-Yawn,0,16,Normal,100,status,FALSE,FALSE,0
-After You,0,24,Normal,100,status,FALSE,FALSE,0
-Swords Dance,0,32,Normal,100,status,FALSE,FALSE,0
-Imprison,0,16,Psychic,100,status,FALSE,FALSE,0
-Sleep Powder,0,24,Grass,75,status,FALSE,FALSE,0
-Iron Defense,0,24,Steel,100,status,FALSE,FALSE,0
-Disable,0,32,Normal,100,status,FALSE,FALSE,0
-Misty Terrain,0,16,Fairy,100,status,FALSE,FALSE,0
-Bulk Up,0,32,Fighting,100,status,FALSE,FALSE,0
-Trick,0,16,Psychic,100,status,FALSE,FALSE,0
-Burning Bulwark,0,16,Fire,100,status,FALSE,FALSE,4
-Life Dew,0,16,Water,100,status,FALSE,FALSE,0
-Haze,0,48,Ice,100,status,FALSE,FALSE,0
-Quiver Dance,0,32,Bug,100,status,FALSE,FALSE,0
-Aurora Veil,0,32,Ice,100,status,FALSE,FALSE,0
-Perish Song,0,8,Normal,100,status,FALSE,TRUE,0
-Dragon Dance,0,32,Dragon,100,status,FALSE,FALSE,0
-Struggle,50,1,Normal,100,physical,TRUE,FALSE,0
+Name,BP,PP,type,accuracy,category,contact,spread,priority,effect
+Fake Out,40,16,Normal,100,physical,TRUE,FALSE,3,TRUE
+Close Combat,120,8,Fighting,100,physical,TRUE,FALSE,0,TRUE
+Surging Strikes,25,8,Water,100,physical,TRUE,FALSE,0,TRUE
+Ivy Cudgel,100,16,Grass,100,physical,FALSE,FALSE,0,TRUE
+U-Turn,70,32,Bug,100,physical,TRUE,FALSE,0,TRUE
+Wood Hammer,120,24,Grass,100,physical,TRUE,FALSE,0,TRUE
+Knock Off,65,32,Dark,100,physical,TRUE,FALSE,0,TRUE
+Aqua Jet,40,32,Water,100,physical,TRUE,FALSE,1,FALSE
+Sucker Punch,70,8,Dark,100,physical,TRUE,FALSE,1,FALSE
+Grassy Glide,55,32,Grass,100,physical,FALSE,FALSE,0,TRUE
+High Horsepower,95,16,Ground,95,physical,TRUE,FALSE,0,FALSE
+Foul Play,95,24,Dark,100,physical,TRUE,FALSE,0,FALSE
+Body Press,80,16,Fighting,100,physical,TRUE,FALSE,0,FALSE
+Heavy Slam,0,16,Steel,100,physical,TRUE,FALSE,0,FALSE
+Drain Punch,75,16,Fighting,100,physical,TRUE,FALSE,0,TRUE
+Flare Blitz,120,16,Fire,100,physical,TRUE,FALSE,0,TRUE
+Glacial Lance,120,8,Ice,100,physical,FALSE,TRUE,0,FALSE
+Ice Spinner,80,24,Ice,100,physical,TRUE,FALSE,0,TRUE
+Power Whip,120,16,Grass,85,physical,TRUE,FALSE,0,FALSE
+Iron Head,80,24,Steel,100,physical,TRUE,FALSE,0,TRUE
+Horn Leech,75,16,Grass,100,physical,TRUE,FALSE,0,TRUE
+Throat Chop,80,24,Dark,100,physical,TRUE,FALSE,0,FALSE
+Low Kick,0,32,Fighting,100,physical,TRUE,FALSE,0,FALSE
+Wicked Blow,75,8,Dark,100,physical,TRUE,FALSE,0,FALSE
+Wild Charge,90,24,Electric,100,physical,TRUE,FALSE,0,TRUE
+Acrobatics,55,24,Flying,100,physical,TRUE,FALSE,0,TRUE
+Sacred Sword,90,24,Fighting,100,physical,TRUE,FALSE,0,TRUE
+Icicle Crash,85,16,Ice,90,physical,FALSE,FALSE,0,TRUE
+Extreme Speed,80,8,Normal,100,physical,TRUE,FALSE,2,FALSE
+Wave Crash,120,16,Water,100,physical,TRUE,FALSE,0,TRUE
+Stomping Tantrum,75,16,Ground,100,physical,TRUE,FALSE,0,FALSE
+Collision Course,100,8,Fighting,100,physical,TRUE,FALSE,0,FALSE
+Earthquake,100,16,Ground,100,physical,FALSE,TRUE,0,FALSE
+Order Up,80,16,Dragon,100,physical,FALSE,FALSE,0,FALSE
+Spirit Break,75,24,Fairy,100,physical,TRUE,FALSE,0,TRUE
+Sacred Fire,100,8,Fire,95,physical,FALSE,FALSE,0,TRUE
+Heat Crash,0,16,Fire,100,physical,TRUE,FALSE,0,FALSE
+Crunch,80,24,Dark,100,physical,TRUE,FALSE,0,TRUE
+Precipice Blades,120,16,Ground,85,physical,FALSE,TRUE,0,FALSE
+Flame Charge,50,32,Fire,100,physical,TRUE,FALSE,0,TRUE
+Play Rough,90,16,Fairy,90,physical,TRUE,FALSE,0,TRUE
+Outrage,120,16,Dragon,100,physical,TRUE,FALSE,0,TRUE
+Aerial Ace,60,32,Flying,200,physical,TRUE,FALSE,0,FALSE
+Headlong Rush,120,8,Ground,100,physical,TRUE,FALSE,0,TRUE
+Fissure,0,5,Ground,30,physical,FALSE,FALSE,0,TRUE
+Breaking Swipe,60,24,Dragon,100,physical,TRUE,TRUE,0,TRUE
+Facade,70,32,Normal,100,physical,TRUE,FALSE,0,TRUE
+Sand Tomb,35,24,Ground,85,physical,FALSE,FALSE,0,FALSE
+Rock Slide,75,16,Rock,90,physical,FALSE,TRUE,0,TRUE
+Scale Shot,25,32,Dragon,90,physical,FALSE,FALSE,0,TRUE
+Shadow Claw,70,24,Ghost,100,physical,TRUE,FALSE,0,FALSE
+Behemoth Bash,100,8,Steel,100,physical,TRUE,FALSE,0,FALSE
+Steel Roller,130,8,Steel,100,physical,TRUE,FALSE,0,TRUE
+Last Respects,50,16,Ghost,100,physical,FALSE,FALSE,0,TRUE
+Kowtow Cleave,85,16,Dark,200,physical,TRUE,FALSE,0,FALSE
+Draco Meteor,130,8,Dragon,90,special,FALSE,FALSE,0,TRUE
+Moonblast,95,24,Fairy,100,special,FALSE,FALSE,0,TRUE
+Sludge Bomb,90,16,Poison,100,special,FALSE,FALSE,0,TRUE
+Earth Power,90,16,Ground,100,special,FALSE,FALSE,0,TRUE
+Dazzling Gleam,80,16,Fairy,100,special,FALSE,TRUE,0,FALSE
+Thunderclap,70,8,Electric,100,special,FALSE,FALSE,1,FALSE
+Icy Wind,55,24,Ice,100,special,FALSE,TRUE,0,TRUE
+Volt Switch,70,32,Electric,100,special,FALSE,FALSE,0,TRUE
+Thunderbolt,90,24,Electric,100,special,FALSE,FALSE,0,TRUE
+Snarl,55,24,Dark,100,special,FALSE,TRUE,0,TRUE
+Psychic,90,16,Psychic,100,special,FALSE,FALSE,0,TRUE
+Astral Barrage,120,8,Ghost,100,special,FALSE,TRUE,0,FALSE
+Heat Wave,95,16,Fire,90,special,FALSE,TRUE,0,TRUE
+Sandsear Storm,100,16,Ground,80,special,FALSE,TRUE,0,TRUE
+Electro drift,100,8,Electric,100,special,TRUE,FALSE,0,FALSE
+Pollen Puff,90,24,Bug,100,special,FALSE,FALSE,0,TRUE
+Overheat,130,8,Fire,90,special,FALSE,FALSE,0,TRUE
+Dark Pulse,80,24,Dark,100,special,FALSE,FALSE,0,TRUE
+Shadow Ball,80,24,Ghost,100,special,FALSE,FALSE,0,TRUE
+Bleakwind Storm,100,16,Flying,80,special,FALSE,TRUE,0,TRUE
+Electroweb,55,24,Electric,95,special,FALSE,TRUE,0,TRUE
+Dragon Pulse,85,16,Dragon,100,special,FALSE,FALSE,0,FALSE
+Weather Ball,50,16,Normal,100,special,FALSE,FALSE,0,TRUE
+Draining Kiss,50,16,Fairy,100,special,FALSE,FALSE,0,TRUE
+Psychic Noise,75,16,Psychic,100,special,FALSE,FALSE,0,FALSE
+Ice Bean,90,16,Ice,100,special,FALSE,FALSE,0,TRUE
+Tera Starstorm,120,8,Normal,100,special,FALSE,FALSE,0,TRUE
+Hurricane,110,16,Flying,70,special,FALSE,FALSE,0,TRUE
+Origin Pulse,110,16,Water,85,special,FALSE,TRUE,0,FALSE
+Tera Blast,80,16,Normal,100,special,FALSE,FALSE,0,TRUE
+Expanding Force,80,16,Psychic,100,special,FALSE,FALSE,0,TRUE
+Hyper Voice,90,16,Normal,100,special,FALSE,TRUE,0,FALSE
+Clear Smog,50,24,Poison,200,special,FALSE,FALSE,0,FALSE
+Muddy Water,90,16,Water,85,special,FALSE,TRUE,0,FALSE
+Water Spout,150,8,Water,100,special,FALSE,TRUE,0,TRUE
+Psyshock,80,16,Psychic,100,special,FALSE,FALSE,0,FALSE
+Blood Moon,140,8,Normal,100,special,FALSE,FALSE,0,FALSE
+Flamethrower,90,24,Fire,100,special,FALSE,FALSE,0,TRUE
+Ruination,0,16,Dark,90,special,FALSE,FALSE,0,TRUE
+Alluring Voice,80,16,Fairy,100,special ,FALSE,FALSE,0,TRUE
+Make It Rain,120,8,Steel,100,special,FALSE,TRUE,0,TRUE
+Eruption,150,8,Fire,100,special,FALSE,TRUE,0,TRUE
+Moongeist Beam,100,8,Ghost,100,special,FALSE,FALSE,0,FALSE
+Meteor Beam,120,16,Rock,90,special,FALSE,FALSE,0,TRUE
+Giga Drain,75,16,Grass,100,special,FALSE,FALSE,0,TRUE
+Tachyon Cutter,50,16,Steel,200,special,FALSE,FALSE,0,TRUE
+Strange Steam,90,16,Fairy,95,special,FALSE,FALSE,0,TRUE
+Thunder,110,16,Electric,70,special,FALSE,FALSE,0,TRUE
+Flash Cannon,80,16,Steel,100,special,FALSE,FALSE,0,TRUE
+Grass Knot,60,32,Grass,100,special,TRUE,FALSE,0,FALSE
+Freeze-Dry,70,32,Ice,100,special,FALSE,FALSE,0,TRUE
+Magma Storm,100,8,Fire,75,special,FALSE,FALSE,0,FALSE
+Electro Shot,130,16,Electric,100,special,FALSE,FALSE,0,TRUE
+Hydro Steam,80,24,Water,100,special,FALSE,FALSE,0,FALSE
+Blizzard,110,8,Ice,70,special,FALSE,TRUE,0,TRUE
+Hyper Beam,150,8,Normal,90,special,FALSE,FALSE,0,TRUE
+Air Slash,75,24,Flying,95,special,FALSE,FALSE,0,TRUE
+Struggle Bug,50,32,Bug,90,special,FALSE,TRUE,0,TRUE
+Hydro Pump,110,8,Water,80,special,FALSE,FALSE,0,FALSE
+Power Gem,80,32,Rock,100,special,FALSE,FALSE,0,FALSE
+Final Gambit,0,8,Fighting,100,special,FALSE,FALSE,0,TRUE
+Rising Voltage,70,32,Electric,100,special,FALSE,FALSE,0,TRUE
+Fiery Dance,80,16,Fire,100,special,FALSE,FALSE,0,TRUE
+Luster Purge,95,8,Psychic,100,special,FALSE,FALSE,0,TRUE
+Discharge,80,24,Electric,100,special,FALSE,TRUE,0,TRUE
+Parabolic Charge,65,32,Electric,100,special,FALSE,TRUE,0,TRUE
+Wildbolt Storm,100,16,Electric,100,special,FALSE,TRUE,0,TRUE
+Bug Buzz,90,16,Bug,100,special,FALSE,FALSE,0,TRUE
+Surf,90,24,Water,100,special,FALSE,TRUE,0,FALSE
+Armor Cannon,120,8,Fire,100,special,FALSE,FALSE,0,TRUE
+Protect,0,16,Normal,100,status,FALSE,FALSE,4,TRUE
+Follow Me,0,32,Normal,100,status,FALSE,FALSE,2,FALSE
+Trick Room,0,8,Psychic,100,status,FALSE,FALSE,-7,TRUE
+Tailwind,0,24,Flying,100,status,FALSE,FALSE,0,TRUE
+Taunt,0,32,Dark,100,status,FALSE,FALSE,0,FALSE
+Spiky Shield,0,16,Grass,100,status,FALSE,FALSE,4,TRUE
+Helping Hand,0,32,Normal,100,status,FALSE,FALSE,5,FALSE
+Detect,0,8,Fighting,100,status,FALSE,FALSE,4,TRUE
+Rage Powder,0,32,Bug,100,status,FALSE,FALSE,2,FALSE
+Spore,0,24,Grass,100,status,FALSE,FALSE,0,TRUE
+Parting Shot,0,32,Dark,100,status,FALSE,FALSE,0,TRUE
+Wide Guard,0,16,Rock,100,status,FALSE,FALSE,3,TRUE
+Will-O-Wisp,0,24,Fire,85,status,FALSE,FALSE,0,TRUE
+Encore,0,8,Normal,100,status,FALSE,FALSE,0,FALSE
+Light Screen,0,48,Psychic,100,status,FALSE,FALSE,0,TRUE
+Calm Mind,0,32,Psychic,100,status,FALSE,FALSE,0,TRUE
+Thunder Wave,0,32,Electric,90,status,FALSE,FALSE,0,TRUE
+Nasty Plot,0,32,Dark,100,status,FALSE,FALSE,0,TRUE
+Rain Dance,0,8,Water,100,status,FALSE,FALSE,0,TRUE
+Coaching,0,16,Fighting,100,status,FALSE,FALSE,0,TRUE
+Substitute,0,16,Normal,100,status,FALSE,FALSE,0,TRUE
+Reflect,0,32,Psychic,100,status,FALSE,FALSE,0,TRUE
+Sunny Day,0,8,Fire,100,status,FALSE,FALSE,0,TRUE
+Yawn,0,16,Normal,100,status,FALSE,FALSE,0,TRUE
+After You,0,24,Normal,100,status,FALSE,FALSE,0,FALSE
+Swords Dance,0,32,Normal,100,status,FALSE,FALSE,0,TRUE
+Imprison,0,16,Psychic,100,status,FALSE,FALSE,0,FALSE
+Sleep Powder,0,24,Grass,75,status,FALSE,FALSE,0,TRUE
+Iron Defense,0,24,Steel,100,status,FALSE,FALSE,0,TRUE
+Disable,0,32,Normal,100,status,FALSE,FALSE,0,FALSE
+Misty Terrain,0,16,Fairy,100,status,FALSE,FALSE,0,TRUE
+Bulk Up,0,32,Fighting,100,status,FALSE,FALSE,0,TRUE
+Trick,0,16,Psychic,100,status,FALSE,FALSE,0,TRUE
+Burning Bulwark,0,16,Fire,100,status,FALSE,FALSE,4,TRUE
+Life Dew,0,16,Water,100,status,FALSE,FALSE,0,TRUE
+Haze,0,48,Ice,100,status,FALSE,FALSE,0,TRUE
+Quiver Dance,0,32,Bug,100,status,FALSE,FALSE,0,TRUE
+Aurora Veil,0,32,Ice,100,status,FALSE,FALSE,0,TRUE
+Perish Song,0,8,Normal,100,status,FALSE,TRUE,0,TRUE
+Dragon Dance,0,32,Dragon,100,status,FALSE,FALSE,0,TRUE
+Struggle,50,1,Normal,100,physical,TRUE,FALSE,0,TRUE

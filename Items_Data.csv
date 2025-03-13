@@ -1,0 +1,46 @@
+Name,Consumable,Removable
+Focus Sash,TRUE,TRUE
+Assault Vest,FALSE,TRUE
+Covert Cloak,FALSE,TRUE
+Rocky Helmet,FALSE,TRUE
+Booster Energy,TRUE,TRUE
+Life Orb,FALSE,TRUE
+Safety Goggles ,FALSE,TRUE
+Choice Scarf,FALSE,TRUE
+Hearthflame Mask,FALSE,FALSE
+Clear Amulet,FALSE,TRUE
+Choice Specs,FALSE,TRUE
+Leftovers,FALSE,TRUE
+Mystic Water,FALSE,TRUE
+Cornerstone Mask,FALSE,FALSE
+Electric Seed,TRUE,TRUE
+Rusted Shield,FALSE,FALSE
+Choice Band,FALSE,TRUE
+Sitrus Berry,TRUE,TRUE
+Eviolite,FALSE,TRUE
+Light Clay,FALSE,TRUE
+Psychic Seed,TRUE,TRUE
+Wellspring Mask,FALSE,FALSE
+Spell Tag,FALSE,TRUE
+Rusted Sword,FALSE,FALSE
+Flame Orb,FALSE,TRUE
+Wide Lens,FALSE,TRUE
+Power Herb,TRUE,TRUE
+Mental Herb,TRUE,TRUE
+Throat Spray,TRUE,TRUE
+Loaded Dice,FALSE,TRUE
+Charcoal,FALSE,TRUE
+Grassy Seed,TRUE,TRUE
+Miracle Seed,FALSE,TRUE
+Zoom Lens,FALSE,TRUE
+Never-Melt Ice,FALSE,TRUE
+Metal Coat,FALSE,TRUE
+Dragon Fang,FALSE,TRUE
+Black Glasses,FALSE,TRUE
+Silk Scarf,FALSE,TRUE
+Soul Dew,FALSE,TRUE
+Sharp Beak,FALSE,TRUE
+White Herb,TRUE,TRUE
+Expert Belt,FALSE,TRUE
+Fairy Feather,FALSE,TRUE
+Bright Powder,FALSE,TRUE

@@ -4,8 +4,9 @@ import pandas as pd
 import re
 import random
 import pygetwindow as gw
-from Classes import Mon, Field
+from Classes import Mon, Field, Item, Move
 from screenshot import capture_chat
+import string
 
 type_chart = {
     'Normal': {
@@ -108,7 +109,6 @@ def load_pokemon_names(csv_path="Pokemon_Data.csv"):
         return set()
 
 known_pokemon = load_pokemon_names()
-print("Known Pokémon Names:", known_pokemon)  # Debugging
 
 def load_pokemon_data(csv_path="Pokemon_Data.csv"):
     try:
@@ -119,7 +119,6 @@ def load_pokemon_data(csv_path="Pokemon_Data.csv"):
         return pd.DataFrame()
 
 pokemon_data = load_pokemon_data()
-print("Loaded Pokémon Data:", pokemon_data.head())  # Debugging
 
 def extract_valid_name(full_name, bracket_name):
     full_name = full_name.strip()
@@ -183,7 +182,7 @@ class DamageCalculator:
     @staticmethod
     def burn_multiplier(user, move):
         """Returns the burn multiplier (0.5 or 1)."""
-        if user.status == "burned" and user.ability != "Guts" and move.category == "Physical":
+        if  "burned" in user.status and user.ability != "Guts" and move.category == "Physical":
             return 0.5
         return 1
     
@@ -191,12 +190,25 @@ class DamageCalculator:
     def other_effects_multiplier(move, user, target, field):
         """Returns the multiplier for all other special effects."""
         multiplier = 1
-        
-        if user.ability == "Guts" and user.status in ["burned", "paralyzed", "poisoned"]:
+        if (move.type == "Water" and user.HeldItem.name == "Mystic Water") or \
+           (move.type == "Ghost" and user.HeldItem.name == "Spell Tag") or \
+           (move.type == "Fire" and user.HeldItem.name == "Charcoal") or \
+           (move.type == "Grass" and user.HeldItem.name == "Miracle Seed") or \
+           (move.type == "Ice" and user.HeldItem.name == "Never-Melt Ice") or \
+           (move.type == "Steel" and user.HeldItem.name == "Metal Coat") or \
+           (move.type == "Dragon" and user.HeldItem.name == "Dragon Fang") or \
+           (move.type == "Dark" and user.HeldItem.name == "Black Glasses") or \
+           (move.type == "Normal" and user.HeldItem.name == "Silk Scarf") or \
+           (user.name in ["Latias", "Latios"] and user.HeldItem.name == "Soul Dew") or \
+           (move.type == "Flying" and user.HeldItem.name == "Sharp Beak") or \
+           (move.type == "Fighting" and user.HeldItem.name == "Expert Belt") or \
+           (move.type == "Fairy" and user.HeldItem.name == "Fairy Feather"):
+            multiplier *= 1.2
+        if user.ability == "Guts" and any(status in user.status for status in ["burned", "paralyzed", "poisoned"]):
             multiplier *= 2
         if move.name == "Brine" and target.currentHP < (target.HP / 2):
             multiplier *= 2
-        if move.name in ["Venoshock", "Barb Barrage"] and target.status == "poisoned":
+        if move.name in ["Venoshock", "Barb Barrage"] and  "poisoned" in target.status:
             multiplier *= 2
         if move.name in ["Solar Beam", "Solar Blade"] and field.weather in ["rain", "sandstorm", "snow"]:
             multiplier *= 0.5
@@ -234,11 +246,10 @@ class DamageCalculator:
             multiplier *= 2
         if target.ability == "Ice Scales" and move.category == "Special":
             multiplier *= 0.5
-        if user.heldItem == "Life Orb":
+        if user.heldItem.name == "Life Orb":
             multiplier *= 5324 / 4096
         
         return multiplier
-
 
 
 def calculate_damage(attacker, target, move, field):
@@ -280,8 +291,102 @@ def calculate_damage(attacker, target, move, field):
 
 
 dfMoves = pd.read_csv("Move_Data.csv")
-
+dfItems = pd.read_csv("Item_Data.csv")
 field = Field()
+
+def item_effects(user, move, opp, oppMove, field):
+    if user.HeldItem.name == "Focus Sash":
+        if user.currentHP == user.HP:
+            if user.ability != "Sturdy":
+                if user.take_damage(calculate_damage(opp, user, oppMove, field).mean()) >= user.HP:
+                    user.currentHP = 1
+                    user.HeldItem.name = None
+    elif user.HeldItem.name == "Assault Vest":
+        user.SpD *= 1.5
+    elif user.HeldItem.name == "Covert Cloak":
+        if opp.Move.effect:
+            opp.Move.effect = False
+    elif user.HeldItem.name == "Rocky Helmet":
+        if opp.Move.contact:
+            opp.take_damage(1/6*calculate_damage(opp, user, oppMove, field).mean())
+    elif user.HeldItem.name == "Booster Energy":
+        if user.name  in ["Great Tusk", "Scream Tail", "Brute Bonnet", "Flutter Mane", "Slither Wing", "Sandy Shocks", "Roaring Moon", "Walking Wake", "Gouging Fire", "Raging Bolt"] and field.weather != "Harsh Sunlight":
+            user.modify_stats({max(user.stats, key=user.stats.get): 1})
+            user.HeldItem = None
+        if user.name in ["Iron Treads", "Iron Bundle", "Iron Hands", "Iron Jugulis", "Iron Moth", "Iron Thorns", "Iron Valiant", "Iron Leaves", "Iron Boulder", "Iron Crown"] and field.terrain != "Electric":
+            user.modify_stats({max(user.stats, key=user.stats.get): 1})
+            user.HeldItem = None
+    elif user.HeldItem.name == "Safety Goggles":
+        if oppMove.name in ["Cotton Spore", "Magic Powder", "Poison Powder", "Powder", "Rage Powder", "Sleep Powder", "Spore", "Stun Spore"]:
+            oppMove.effect = False
+    elif user.HeldItem.name == "Choice Scarf":
+        user.speed *= 1.5
+        user.status.append("Choice Locked")
+    elif user.HeldItem.name == "Hearthflame Mask":
+        if user.IsTera:
+            user.modify_stats({"Patk": 1})
+    elif user.HeldItem.name == "Clear Amulet":
+        for stat in user.stats:
+            if user.stats[stat] < 0:
+                user.stats[stat] = 0
+    elif user.HeldItem.name == "Choice Specs":
+        user.SpA *= 1.5
+        user.status.append("Choice Locked")
+    elif user.HeldItem.name == "Leftovers":
+        user.currentHP += user.HP/16
+    elif user.HeldItem.name == "Cornerstone Mask":
+        if user.IsTera:
+            user.modify_stats({"Pdef": 1})
+    elif user.HeldItem.name == "Electric Seed":
+        if field.terrain == "Electric":
+            user.modify_stats({"Pdef": 1})
+            user.HeldItem = None
+    elif user.HeldItem.name == "Rusted Shield":
+        user.modify_stats({"Pdef": 1})
+    elif user.HeldItem.name == "Choice Band":
+        user.Patk *= 1.5
+        user.status.append("Choice Locked")
+    elif user.HeldItem.name == "Sitrus Berry":
+        user.currentHP += user.HP/4
+        user.HeldItem.name = None
+    elif user.HeldItem.name == "Eviolite":
+        user.Pdef *= 1.5
+        user.SpD *= 1.5
+    elif user.HeldItem.name == "Psychic Seed":
+        if field.terrain == "Psychic":
+            user.modify_stats({"SpD": 1})
+            user.HeldItem = None
+    elif user.HeldItem.name == "Wellspring Mask":
+        if user.IsTera:
+            user.modify_stats({"SpD": 1})
+    elif user.HeldItem.name == "Rusted Sword":
+        user.modify_stats({"Patk": 1})
+    elif user.HeldItem.name == "Flame Orb":
+        if not any(status in user.status for status in ["Burn", "Paralysis", "Poison", "Freeze", "Sleep"]):
+            user.status.append("Burn")
+    elif user.HeldItem.name in ["Wide Lens", "Zoom Lens"]:
+        for move in user.Moves:
+            move.accuracy *= 4505/4096
+    elif user.HeldItem.name == "Mental Herb":
+        if oppMove.name in ["Torment", "Taunt", "Encore", "Disable"]:
+            oppMove.effect = False
+    elif user.HeldItem.name == "Throat Spray":
+        if move.name in ["Growl", "Roar", "Sing", "Supersonic", "Screech", "Snore", "Perish Song", "Heal Bell", "Uproar", "Hyper Voice", "Metal Sound", "Grass Whistle", "Howl", "Bug Buzz", "Chatter", "Round", "Echoed Voice", "Relic Song", "Snarl", "Noble Roar", "Disarming Voice", "Parting Shot", "Boomburst", "Confide", "Sparkling Aria", "Clanging Scales", "Clangorous Soulblaze", "Clangorous Soul", "Overdrive", "Eerie Spell", "Torch Song", "Alluring Voice", "Psychic Noise"]:
+            user.modify_stats({"SpA": 1})
+            user.HeldItem.name = None
+    elif user.HeldItem.name == "Grassy Seed":
+        if field.terrain == "Grassy":
+            user.modify_stats({"Pdef": 1})
+            user.HeldItem = None
+    elif user.HeldItem.name == "White Herb":
+        for stat in user.stats:
+            if user.stats[stat] < 0:
+                user.stats[stat] = 0
+        user.HeldItem.name = None
+    elif user.HeldItem.name == "Bright Powder":
+        for move in opp.Moves:
+            move.accuracy *= 236/256
+
 
 perish_counters = {}
 
@@ -308,7 +413,7 @@ def stat_change_move(user, target, move, playerMons, oppMons):
         user.modify_stats({"Pdef": -1, "SpD": -1})
     elif move.name in ["Draco Meteor", "Overheat", "Make It Rain"]:
         user.modify_stats({"SpA": -2})
-    elif move.name in ["Meteor Beam", "Electro Shot"] and user.status != "Charging":
+    elif move.name in ["Meteor Beam", "Electro Shot"] and "Charging" not in user.status:
         user.modify_stats({"SpA": 1})
     elif move.name == "Breaking Swipe":
         for pokemon in oppMons[:2]:
@@ -340,51 +445,75 @@ def stat_change_move(user, target, move, playerMons, oppMons):
     
 def status_condition_move(user, target, move, oppMove, playerMons, oppMons):
     if move.name == "Burning Bulwark" and oppMove.category == "physical":
-        target.status = "Burn"
+        if not any(status in target.status for status in ["Burn", "Paralysis", "Poison", "Freeze", "Sleep"]):
+            target.status.append("Burn")
     elif move.name in ["Will-O-Wisp", "Flametthrower", "Flare Blitz", "Sacred Fire"]:
-        target.status = "Burn"
+        if not any(status in target.status for status in ["Burn", "Paralysis", "Poison", "Freeze", "Sleep"]):
+            target.status.append("Burn")
     elif move.name in ["Sandsear Storm", "Heat Wave"]:
         for pokemon in oppMons[:2]:
-            pokemon.status = "Burn"
+            if not any(status in pokemon.status for status in ["Burn", "Paralysis", "Poison", "Freeze", "Sleep"]):
+                pokemon.status.append("Burn")
     elif move.name == "Blizzard":
         for pokemon in oppMons[:2]:
-            pokemon.status = "Freeze"
+            if not any(status in pokemon.status for status in ["Burn", "Paralysis", "Poison", "Freeze", "Sleep"]):
+                pokemon.status.append("Freeze")
     elif move.name in ["Freeze-Dry", "Ice Beam"]:
-        target.status = "Freeze"
+        if not any(status in target.status for status in ["Burn", "Paralysis", "Poison", "Freeze", "Sleep"]):
+            target.status.append("Freeze")
     elif move.name in ["Discharge", "Wildbolt Storm"]:
         for pokemon in oppMons[:2]:
-            pokemon.status = "Paralysis"
+            if not any(status in pokemon.status for status in ["Burn", "Paralysis", "Poison", "Freeze", "Sleep"]):
+                pokemon.status.append("Paralysis")
     elif move.name in ["Thunder", "Thunder Wave", "Thunderbolt"]:
-        target.status = "Paralysis"
+        if not any(status in target.status for status in ["Burn", "Paralysis", "Poison", "Freeze", "Sleep"]):
+            target.status.append("Paralysis")
     elif move.name == "Sludge Bomb":
-        target.status = "Poison"
+        if not any(status in target.status for status in ["Burn", "Paralysis", "Poison", "Freeze", "Sleep"]):
+            target.status.append("Poison")
     elif move.name in ["Sleep Powder", "Spore"]:
-        target.status = "Sleep"
+        if not any(status in target.status for status in ["Burn", "Paralysis", "Poison", "Freeze", "Sleep"]):
+            target.status.append("Sleep")
     elif move.name == "Yawn":
-        target.status = "Drowsy"
+        if not any(status in target.status for status in ["Burn", "Paralysis", "Poison", "Freeze", "Sleep"]):
+            target.status.append("Sleep")
     elif move.name == "Alluring Voice" and target.stats_raised():
-        target.status = "Confusion"
+        if "Confusion" not in target.status:
+            target.status.append("Confusion")
     elif move.name == "Hurricane":
         for pokemon in oppMons[:2]:
-            pokemon.status = "Confusion"
+            if "Confusion" not in pokemon.status:
+                pokemon.status.append("Confusion")
     elif move.name == "Strange Steam":
-        target.status = "Confusion"
+        if "Confusion" not in target.status:
+            target.status.append("Confusion")
     elif move.name == "Outrage":
-        user.status = "Confusion"
+        if "Confusion" not in user.status:
+            user.status.append("Confusion")
     elif move.name in ["Air Slash", "Dark Pulse", "Fake Out", "Icicle Crash", "Iron Head"]:
-        target.status = "Flinch"
+        if "Flinch" not in target.status:
+            target.status.append("Flinch")
     elif move.name == "Rock Slide":
         for pokemon in oppMons[:2]:
-            pokemon.status = "Flinch"
-    
-    
+            if "Flinch" not in pokemon.status:
+                pokemon.status.append("Flinch")
+
     
 def switch_out_move(user, target, move, playerMons, oppMons):
-    if playerMons[2] is not None and playerMons[2].status != "Fainted" and playerMons[3] is not None and playerMons[3].status != "Fainted":
+    if playerMons[2] is not None and "fainted" not in playerMons[2].status and playerMons[3] is not None and "Fainted" not in playerMons[3].status:
         if move.name in ["U-turn", "Volt Switch", "Parting Shot"]:
+            # Reset stats for the user before switching out
+            reset_stats(user)
+            user.status = [status for status in user.status if status != "Choice Locked"]  # Remove Choice Locked status
+            
             temp = user
             user = playerMons[2]
             playerMons[2] = temp
+
+def reset_stats(pokemon):
+    """Resets the Pokémon's stats to their original values."""
+    for stat in pokemon.original_stats:
+        pokemon.stats[stat] = pokemon.original_stats[stat]
 
 def recoil_move(user, target, move, oppMove, playerMons, oppMons, field):
     if move.name in ["Struggle", "Substitute"]:
@@ -451,50 +580,57 @@ def multi_hit_move(user, target, move, field, playerMons, oppMons):
         for i in range(2):
             target.take_damage(calculate_damage(user, target, move, field).mean())
     elif move.name == "Scale Shot":
-        for i in range(3):
-            target.take_damage(calculate_damage(user, target, move, field).mean())
+        if user.HeldItem.name != "Loaded Dice":
+            for i in range(3):
+                target.take_damage(calculate_damage(user, target, move, field).mean())
+        if user.HeldItem.name == "Loaded Dice":
+            for i in range (5):
+                target.take_damage(calculate_damage(user, target, move, field).mean())
 
 def charge_move(user, target, move, field, playerMons, oppMons):
-    if user.status != "Charging" or user.status != "Recharging":
+    if "Charging" not in user.status or "Recharging" not in user.status :
         if move.name == "Hyper Beam":
             target.take_damage(calculate_damage(user, target, move, field).mean())
-            user.status = "Recharging"
+            user.status.append("Recharging")
             return
-        elif move.name == "Electro Shot" and field.weather != "Rain":
-            user.status = "Charging"
-            return
-        elif move.name == "Meteor Beam":
-            user.status = "Charging"
-            return
+        if user.HeldItem.name != "Power Herb":
+            if move.name == "Electro Shot" and field.weather != "Rain":
+                user.status.append("Charging")
+                return
+            elif move.name == "Meteor Beam":
+                user.status.append("Charging")
+                return
 
-    if user.status == "Charging":
+    if "Charging" in user.status or user.HeldItem.name == "Power Herb":
         if move.name == "Electro Shot":
             target.take_damage(calculate_damage(user, target, move, field).mean())
-            user.status = None
+            if "Charging" in user.status:
+                user.status.remove("Charging")
         elif move.name == "Meteor Beam":
             target.take_damage(calculate_damage(user, target, move, field).mean())
-            user.status = None
-    elif user.status == "Recharging":
+            if "Charging" in user.status:
+                user.status.remove("Charging")
+    elif "Recharging" in user.status:
         user.take_damage(0)
-        user.status = None
+        user.status.remove("Recharging")
 
 
 
 def protection_move(user, target, move, oppMove, field, playerMons, oppMons):
     if move.name == "Burning Bulwark":
-        user.status = "Protected"
+        user.status.append("Protected")
     elif move.name == "Detect":
-        user.status = "Protected"
+        user.status.append("Protected")
     elif move.name == "Protect":
-        user.status = "Protected"
+        user.status.append("Protected")
     elif move.name == "Spiky Shield":
-        user.status = "Protected"
+        user.status.append("Protected")
         for pokemon in oppMons[:2]:
             if pokemon.Move.category == "physical":
                 pokemon.take_damage(1/8*pokemon.HP)
     elif move.name == "Wide Guard" and oppMove.spread:
         for pokemon in playerMons[:2]:
-            pokemon.status = "Protected"
+            pokemon.status.append("Protected")
     
 
 def extra_effect_move(user, target, move, field, playerMons, oppMons):
@@ -509,11 +645,14 @@ def extra_effect_move(user, target, move, field, playerMons, oppMons):
         target.Pdef = target.original_stats["Pdef"]
         target.take_damage(calculate_damage(user, target, move, field).mean())
         target.Pdef = temp
-    elif move.name == "Facade" and user.status in ["Burn", "Paralysis", "Poison", "Toxic"]:
+    elif move.name == "Facade" and any(status in user.status for status in ["Burn", "Paralysis", "Poison", "Toxic"]):
         move.BP *= 2
+    elif move.name == "Acrobatics":
+        if user.Item == None:
+            move.BP *= 2
     elif move.name == "Last Respects":
         for mon in playerMons:
-            if mon.status == "Fainted":
+            if  "Fainted" in mon.status:
                 move.BP += 50
     elif move.name == "Weather Ball":
         if field.weather == "Harsh sunlight":
@@ -525,6 +664,9 @@ def extra_effect_move(user, target, move, field, playerMons, oppMons):
     if user.IsTera:
         if move.name == "Tera Blast":
             move.type = user.teraType
+            if user.teraType == "Stellar":
+                target.take_damage(2*calculate_damage(user, target, move, field).mean())
+                user.modify_stats({"Patk": -1, "SpA": -1})
         elif move.name == "Tera Starstorm":
             move.type = "Stellar"
             move.spread = True
@@ -563,18 +705,38 @@ def extra_effect_move(user, target, move, field, playerMons, oppMons):
                 mon.currentHP = 0  # Set HP to 0 if perish counter reaches 0
 
 
-def apply_effects(user, move, target, field, targetMove, playerMons, oppMons):
-    stat_change_move(user, target, move, playerMons, oppMons)
-    status_condition_move(user, target, move, targetMove, playerMons, oppMons)
-    switch_out_move(user, target, move, playerMons, oppMons)
-    recoil_move(user, target, move, targetMove, playerMons, oppMons, field)
-    healing_move(user, target, move, playerMons, oppMons)
-    field_effect_move(user, target, move, field)
-    multi_hit_move(user, target, move, field, playerMons, oppMons)
-    charge_move(user, target, move, field, playerMons, oppMons)
-    protection_move(user, target, move, field, playerMons, oppMons)
-    extra_effect_move(user, target, move, field, playerMons, oppMons)
+def status_effect(user):
+    if "Burn" in user.status and user.ability != "Guts":
+        user.Patk = user.Patk / 2
+        user.take_damage(user.HP / 16)
+    if "Paralysis" in user.status:
+        user.Speed = user.Speed / 2
+    if "Poison" in user.status:
+        user.take_damage(user.HP / 8)
+    if "Choice Locked" in user.status:
+        user.Moves = [user.Moves[0]] if user.Moves else None
+    
 
+
+def apply_effects(user, move, target, field, targetMove, playerMons, oppMons):
+    if("Flinch" not in user.status and "Sleep" not in user.status and "Freeze" not in user.status):
+        if move.spread:
+            for pokemon in oppMons[:2]:
+                pokemon.take_damage(calculate_damage(user, pokemon, move, field).mean())
+        else:
+            target.take_damage(calculate_damage(user, target, move, field).mean())
+        if(move.effect):
+            stat_change_move(user, target, move, playerMons, oppMons)
+            status_condition_move(user, target, move, targetMove, playerMons, oppMons)
+            switch_out_move(user, target, move, playerMons, oppMons)
+            recoil_move(user, target, move, targetMove, playerMons, oppMons, field)
+            healing_move(user, target, move, playerMons, oppMons)
+            field_effect_move(user, target, move, field, playerMons, oppMons)
+            multi_hit_move(user, target, move, field, playerMons, oppMons)
+            charge_move(user, target, move, field, playerMons, oppMons)
+            protection_move(user, target, move, field, playerMons, oppMons)
+            extra_effect_move(user, target, move, field, playerMons, oppMons)
+    
 
 
 def parse_battle_text(battle_text, field, known_pokemon):
@@ -627,13 +789,51 @@ def parse_battle_text(battle_text, field, known_pokemon):
     print("Player Pokémon List after parsing:", [mon.name for mon in field.playerMons])  # Debugging
     print("Opponent Pokémon List after parsing:", [mon.name for mon in field.oppMons])  # Debugging
 
+
+def clean_text(text):
+    """Cleans the OCR text by removing unwanted characters and fixing spacing issues."""
+    cleaned_text = ''.join(char for char in text if char in string.printable)  # Keep only printable characters
+    cleaned_text = ' '.join(cleaned_text.split())  # Normalize whitespace
+    return cleaned_text
+
 def monitor_battle(field, known_pokemon):
+    if not hasattr(field, "last_processed_turn"):
+        field.last_processed_turn = 0  # Store last turn in field to persist
+    last_extracted_text = ""
+
     while any("Showdown!" in w.title for w in gw.getWindowsWithTitle("Showdown!")):
-        battle_text = capture_chat()
-        print("Captured Battle Text:", battle_text)  # Debugging
-        if battle_text:
-            parse_battle_text(battle_text, field, known_pokemon)
-        time.sleep(2)
+        lines = capture_chat()
+        print("Captured Battle Text:", lines)  # Debugging
+        
+        # Clean the captured lines
+        cleaned_lines = [clean_text(line) for line in lines]
+        
+        # Extract turn numbers
+        turn_numbers = [int(match.group(1)) for line in cleaned_lines if (match := re.match(r'Turn (\d+)', line))]
+        
+        if turn_numbers:
+            next_turn = field.last_processed_turn + 1
+            if next_turn in turn_numbers:
+                print(f"Processing Turn {next_turn}")  # Debugging
+                start_idx = next((i for i, line in enumerate(cleaned_lines) if f"Turn {next_turn}" in line), None)
+                if start_idx is not None:
+                    end_idx = next((i for i, line in enumerate(cleaned_lines[start_idx + 1:], start=start_idx + 1) if re.match(r'Turn \d+', line)), None)
+                    content_lines = cleaned_lines[start_idx + 1:end_idx] if end_idx else cleaned_lines[start_idx + 1:]
+                    extracted_text = "\n".join(content_lines).strip()
+
+                    # Check for duplicate extraction
+                    if extracted_text and extracted_text != last_extracted_text:
+                        print(f"Extracted content for Turn {next_turn}:", extracted_text)  # Debugging
+                        parse_battle_text(extracted_text, field, known_pokemon)
+                        field.last_processed_turn = next_turn  # Update last processed turn
+                        last_extracted_text = extracted_text  # Store last extracted text
+                    else:
+                        print("Duplicate turn data detected or empty extraction. Skipping processing.")
+            else:
+                print(f"Turn {next_turn} not found in captured text. Current turn numbers: {turn_numbers}")  # Debugging
+        
+        time.sleep(10)  # Wait before capturing again
+
 
 try:
     field = Field()
